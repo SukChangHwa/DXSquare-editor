@@ -4,6 +4,9 @@
     <div class="px-4 md:px-10 mx-auto w-full">
       <div>
         <!-- Card stats -->
+        <div v-show="props.isShowTemplateSaveBtn">
+          <button @click="savaTemplateImage">템플릿 저장하기</button>
+        </div>
         <div class="flex" v-show="props.isShow">
           <div class="w-full lg:w-6/12 xl:w-3/12 px-4">
             <card-stats
@@ -66,14 +69,20 @@ import CardStats from '@/components/card/CardStats.vue'
 
 interface IProp {
   isShow?: boolean
+  isShowTemplateSaveBtn?: boolean
 }
 
-const props = withDefaults(defineProps<IProp>(),{
-  isShow: true
+const props = withDefaults(defineProps<IProp>(), {
+  isShow: true,
+  isShowTemplateSaveBtn: false
 })
 
 const dragging = function (e: any) {
   e.dataTransfer.setData('Text', e.target.id)
+}
+
+const savaTemplateImage = () => {
+  console.log('click')
 }
 
 const compBtnList: { [key: string]: string } = Constant.COMPONENT_CREATE_BUTTON_ID_LIST

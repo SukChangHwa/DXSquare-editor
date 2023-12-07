@@ -10,18 +10,17 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
-import htmlToPdf from 'html2pdf.js';
-import FroalaEditor from 'froala-editor';
-import htmlToCanvas from 'html2canvas';
+import htmlToPdf from 'html2pdf.js'
+import FroalaEditor from 'froala-editor'
+import htmlToCanvas from 'html2canvas'
 // import { create } from 'domain';
-
 
 const config = ref({
   // events: {
   //   initialized: () => {
   //     console.log('initialized')
   //     let editor = this as any
-  //     // editor.opts.html2pdf=methods.htmlToPdf 
+  //     // editor.opts.html2pdf=methods.htmlToPdf
 
   //     editor.events.on(
   //       'drop',
@@ -85,26 +84,25 @@ const config = ref({
   // },
   height: 580,
   // pluginsEnabled: ['image', 'link','inlineClass', 'inlineStyle', 'lineBreaker', 'paragraphFormat', 'paragraphStyle', 'fontAwesome', 'print'],
-  html2pdf: htmlToPdf 
+  html2pdf: htmlToPdf
 })
 
-
-onMounted(()=>{
+onMounted(() => {
   FroalaEditor.RegisterCommand('getPDF', {
-        title: '입력영역 삽입',
-        focus: true,
-        undo: true,
-        refreshAfterCallback: true,
-        callback: function () {
-          // const htmlStr = this.html.get()
-          const editorHtmlElem = document.getElementsByClassName('fr-element')
+    title: '입력영역 삽입',
+    focus: true,
+    undo: true,
+    refreshAfterCallback: true,
+    callback: function () {
+      // const htmlStr = this.html.get()
+      const editorHtmlElem = document.getElementsByClassName('fr-element')
 
-          htmlToCanvas(editorHtmlElem[0]).then((canvas)=>{
-            const t = canvas.toDataURL();
-            console.log(t)
-          })
-        }
-      });
+      htmlToCanvas(editorHtmlElem[0]).then((canvas) => {
+        const t = canvas.toDataURL()
+        console.log(t)
+      })
+    }
+  })
 })
 </script>
 
