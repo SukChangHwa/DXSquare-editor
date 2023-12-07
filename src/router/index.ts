@@ -1,7 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
-import DocumentEditView from '../views/DocumentEditView.vue'
-import Dashboard from '../views/Dashboard.vue'
+import HomeView from '@/views/HomeView.vue'
+import DocumentEditView from '@/views/DocumentEditView.vue'
+import Dashboard from '@/views/Dashboard.vue'
+import TemplateCreateView from '@/views/TemplateCreateView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -20,6 +21,10 @@ const router = createRouter({
         {
           path: '/doc/dashboard',
           component: Dashboard
+        },
+        {
+          path: '/doc/editor',
+          component: TemplateCreateView
         }
       ]
     },

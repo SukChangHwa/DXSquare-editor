@@ -5,6 +5,6 @@ export default {
     check: 'comp-check',
     radio: 'comp-radio',
     sign: 'comp-signature',
-    image: 'comp-image',
+    image: 'comp-image'
   }
 }

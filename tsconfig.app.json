@@ -7,7 +7,9 @@
     "target": "ES6",
     "lib": ["es5", "es2015.promise", "dom"],
     "removeComments": true,
+    "noImplicitAny": false,
     "allowJs": true,
+    "checkJs": false,
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]

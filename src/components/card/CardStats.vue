@@ -15,14 +15,11 @@
             {{ compName }}
           </h5>
         </div>
-        
       </div>
-      
     </div>
   </div>
 </template>
 <script setup lang="ts">
-
 const props = defineProps({
   compId: {
     type: String,
@@ -43,5 +40,4 @@ const props = defineProps({
     default: 'bg-red-500'
   }
 })
-
 </script>

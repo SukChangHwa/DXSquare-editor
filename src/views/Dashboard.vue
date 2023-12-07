@@ -27,9 +27,6 @@ const drop = function (e: any) {
   let data = e.dataTransfer.getData('Text')
   console.log(data)
 
-  // eslint-disable-next-line
-  debugger
-  //here
   const topPos = e.layerY - 20
   const leftPos = e.layerX - 20
 
@@ -61,8 +58,6 @@ onMounted(() => {
   annotationLayer?.addEventListener('drop', drop)
   annotationLayer?.addEventListener('dragover', allowDrop)
 })
-
-
 </script>
 
 <style scoped>
