@@ -32,7 +32,7 @@ import { ref } from 'vue'
 import Modal from '@/components/ModalItem.vue'
 
 const props = defineProps({
-    title: String
+  title: String
 })
 
 const templateTitle = ref('')

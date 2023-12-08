@@ -4,7 +4,7 @@
       <div class="w-full h-full mb-12 xl:mb-0 px-4">
         <!-- <froala v-if="isShowEditor === true" class="w-full" id="edit" :tag="'textarea'" :config="config"></froala> -->
         <div class="w-full">
-          <div class="layer">
+          <div id="doc-container" class="layer">
             <img :src="backgroundImage" />
             <canvas class="canvas-div"></canvas>
             <div id="annotationLayer" class="annotation-layer"></div>
@@ -17,8 +17,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import sample from '@/assets/images/sample-1.png'
-import { useImageStore, type ItemplateImg } from '@/stores/image';
-
+import { useImageStore, type ItemplateImg } from '@/stores/image'
 
 const imageStore = useImageStore()
 const backgroundImage = ref('')
@@ -36,7 +35,7 @@ const drop = function (e: any) {
   const leftPos = e.layerX - 20
 
   let tempDiv = document.createElement('div')
-    tempDiv.setAttribute('style', `position:absolute; top: ${topPos}px; left:${leftPos}px;`)
+  tempDiv.setAttribute('style', `position:absolute; top: ${topPos}px; left:${leftPos}px;`)
 
   if (data == 'comp-input') {
     let tempInput = document.createElement('input')
@@ -51,7 +50,7 @@ const drop = function (e: any) {
 
     tempDiv.appendChild(tempText)
     e.target.appendChild(tempDiv)
-  } else if(data == 'comp-check'){
+  } else if (data == 'comp-check') {
     let tempCheck = document.createElement('input')
     tempCheck.type = 'checkbox'
     // tempCheck.setAttribute('style', 'font-size:12px')
@@ -59,15 +58,18 @@ const drop = function (e: any) {
 
     tempDiv.appendChild(tempCheck)
     e.target.appendChild(tempDiv)
-  } else if(data == 'comp-radio'){
+  } else if (data == 'comp-radio') {
     let tempRadio = document.createElement('input')
     tempRadio.type = 'radio'
 
     tempDiv.appendChild(tempRadio)
     e.target.appendChild(tempDiv)
-  } else if(data == 'comp-signature') {
+  } else if (data == 'comp-signature') {
     let tempSignComp = document.createElement('div')
-    tempSignComp.setAttribute('style', 'font-size:12px;border:1px solid #000; width: 30px; height: 30px;')
+    tempSignComp.setAttribute(
+      'style',
+      'font-size:12px;border:1px solid #000; width: 30px; height: 30px;'
+    )
 
     tempDiv.appendChild(tempSignComp)
     e.target.appendChild(tempDiv)
@@ -80,10 +82,9 @@ onMounted(() => {
   annotationLayer?.addEventListener('drop', drop)
   annotationLayer?.addEventListener('dragover', allowDrop)
 
-
-  const imgList:ItemplateImg[] = JSON.parse(localStorage.getItem('templates') ?? '') ?? new Array<ItemplateImg>()
+  const imgList: ItemplateImg[] =
+    JSON.parse(localStorage.getItem('templates') ?? '') ?? new Array<ItemplateImg>()
   backgroundImage.value = imgList[0].dataStr
-
 })
 </script>
 
