@@ -11,9 +11,8 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import htmlToPdf from 'html2pdf.js'
-import FroalaEditor from 'froala-editor'
-import htmlToCanvas from 'html2canvas'
-// import { create } from 'domain';
+// import FroalaEditor from 'froala-editor'
+// import htmlToCanvas from 'html2canvas'
 
 const config = ref({
   // events: {
@@ -87,23 +86,7 @@ const config = ref({
   html2pdf: htmlToPdf
 })
 
-onMounted(() => {
-  FroalaEditor.RegisterCommand('getPDF', {
-    title: '입력영역 삽입',
-    focus: true,
-    undo: true,
-    refreshAfterCallback: true,
-    callback: function () {
-      // const htmlStr = this.html.get()
-      const editorHtmlElem = document.getElementsByClassName('fr-element')
-
-      htmlToCanvas(editorHtmlElem[0]).then((canvas) => {
-        const t = canvas.toDataURL()
-        console.log(t)
-      })
-    }
-  })
-})
+onMounted(() => {})
 </script>
 
 <style scoped></style>

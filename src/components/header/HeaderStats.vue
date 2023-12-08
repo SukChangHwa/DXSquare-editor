@@ -5,7 +5,7 @@
       <div>
         <!-- Card stats -->
         <div v-show="props.isShowTemplateSaveBtn">
-          <button @click="savaTemplateImage">템플릿 저장하기</button>
+          <button @click="showSaveModal">템플릿 저장하기</button>
         </div>
         <div class="flex" v-show="props.isShow">
           <div class="w-full lg:w-6/12 xl:w-3/12 px-4">
@@ -60,10 +60,23 @@
       </div>
     </div>
   </div>
+  <saveModal
+            v-if="isShowSaveModal"
+            :title="'템플릿 저장'"
+            @cancel="hideSaveModal"
+            @confirm="
+              (title) => {
+                saveTemplateImage(title)
+              }
+            "
+          ></saveModal>
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
+import { useImageStore, type ItemplateImg } from '@/stores/image'
+import saveModal from '@/components/modal/TemplateSaveModal.vue'
+import htmlToCanvas from 'html2canvas'
 import Constant from '@/assets/ts/constant'
 import CardStats from '@/components/card/CardStats.vue'
 
@@ -72,17 +85,43 @@ interface IProp {
   isShowTemplateSaveBtn?: boolean
 }
 
+const imageStore = useImageStore()
+
 const props = withDefaults(defineProps<IProp>(), {
   isShow: true,
   isShowTemplateSaveBtn: false
 })
 
+const isShowSaveModal = ref(false)
+
 const dragging = function (e: any) {
   e.dataTransfer.setData('Text', e.target.id)
 }
 
-const savaTemplateImage = () => {
-  console.log('click')
+const showSaveModal = () => {
+  isShowSaveModal.value = true
+}
+
+const hideSaveModal = () => {
+  isShowSaveModal.value = false
+}
+
+const saveTemplateImage = (title) => {
+  const editorHtmlElem = document.getElementsByClassName('fr-element')
+
+  htmlToCanvas(editorHtmlElem[0]).then((canvas) => {
+    const t = canvas.toDataURL()
+    console.log(t)
+    const imageObj: ItemplateImg = {
+      dataStr: t,
+      fileName: title
+    }
+
+    let preTemplates:Array<ItemplateImg> = JSON.parse(localStorage.getItem('templates')?? '') ?? new Array<ItemplateImg>()
+    preTemplates.push(imageObj)
+    localStorage.setItem('templates', JSON.stringify(preTemplates))
+    // imageStore.saveImage(imageObj)
+  })
 }
 
 const compBtnList: { [key: string]: string } = Constant.COMPONENT_CREATE_BUTTON_ID_LIST
