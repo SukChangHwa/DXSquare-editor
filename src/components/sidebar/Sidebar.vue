@@ -78,7 +78,7 @@
           {{ `1 / ${templateImages.length} 페이지` }}
         </h6>
         <!-- Navigation -->
-        <ThumbnailItem v-if="props.isShowThumbnail"></ThumbnailItem>
+        <ThumbnailItem v-if="imageStore.getSelectImage()"></ThumbnailItem>
         
       </div>
     </div>

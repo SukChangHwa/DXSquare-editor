@@ -64,8 +64,8 @@
                     템플릿을 직접 만들거나<br />외부 파일을 이용해보세요.<br />MS Word 파일을
                     붙여넣거나<br />PDF 파일을 불러올 수 있어요.
                     <a
-                      href="/doc/editor"
                       class="mt-5 mb-4 ml-1 text-white font-bold px-6 py-4 rounded outline-none focus:outline-none mr-1 mb-1 bg-blueGray-700 active:bg-blueGray-600 uppercase text-sm shadow hover:shadow-lg ease-linear transition-all duration-150 block"
+                      @click="goCreateTemplatePage"
                     >
                       작성하기
                     </a>
@@ -227,16 +227,25 @@ import { ref } from 'vue'
 import documentation from '@/assets/images/documentation.png'
 import TemplateSelectModal from '@/components/modal/TemplateSelectModal.vue'
 import {useImageStore, type ItemplateImg} from '@/stores/image'
+import { useServiceStore } from '@/stores/service'
 import router from '@/router'
 
 const imageStore = useImageStore()
+const serviceStore = useServiceStore()
+
 const isShowTemplateModal = ref(false)
 const showSelectTemplateModal = (val)=> {
   isShowTemplateModal.value = val
 }
 
+const goCreateTemplatePage = () => {
+  serviceStore.setCreateBarStatus(false)
+  router.push({path: '/doc/editor'})
+}
+
 const moveTemplateEditPage = (item: ItemplateImg)=>{
   imageStore.setSelectImage(item.fileName)
+  serviceStore.setCreateBarStatus(true)
   router.push({path: '/doc/dashboard'})
 }
 </script>

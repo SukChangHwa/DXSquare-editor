@@ -24,15 +24,15 @@
             <button><i class="fa-solid fa-rotate-right"></i></button>
           </div>
           <div class="doc-control-2 space-x-5">
-            <button @click="saveDocToHtml"><i class="fa-regular fa-floppy-disk"></i></button>
+            <button @click="showSaveModal"><i class="fa-regular fa-floppy-disk"></i></button>
             <button>
               <i class="fa-solid fa-arrow-right-from-bracket"></i>
             </button>
           </div>
         </div>
-        <div v-if="props.isShowTemplateSaveBtn">
+        <!-- <div v-if="props.isShowTemplateSaveBtn">
           <button @click="showSaveModal">템플릿 저장하기</button>
-        </div>
+        </div> -->
         <div class="flex" v-show="props.isShow">
           <div class="w-full lg:w-6/12 xl:w-3/12 px-4">
             <card-stats
@@ -101,6 +101,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { useImageStore, type ItemplateImg } from '@/stores/image'
+import { useServiceStore } from '@/stores/service'
 import saveModal from '@/components/modal/TemplateSaveModal.vue'
 import htmlToCanvas from 'html2canvas'
 import Constant from '@/assets/ts/constant'
@@ -115,7 +116,7 @@ const props = withDefaults(defineProps<IProp>(), {
   isShow: true,
   isShowTemplateSaveBtn: false
 })
-
+const serviceStore = useServiceStore()
 const imageStore = useImageStore()
 
 const isShowSaveModal = ref(false)
@@ -125,7 +126,13 @@ const dragging = function (e: any) {
 }
 
 const showSaveModal = () => {
-  isShowSaveModal.value = true
+  let isShowCreateBar = serviceStore.getCreateBarStatus() 
+  if(isShowCreateBar) {
+    saveDocToHtml()
+  } else {
+    isShowSaveModal.value = true
+  }
+  
 }
 
 const hideSaveModal = () => {
@@ -181,19 +188,6 @@ const saveTemplateImage = (title) => {
     }
 
     imageStore.saveImage(imageObj)
-
-  
-    // try {
-    //   let preTemplates: Array<ItemplateImg> =
-    //     JSON.parse(localStorage.getItem('templates') ?? '') ?? new Array<ItemplateImg>()
-    //   preTemplates.push(imageObj)
-    //   localStorage.setItem('templates', JSON.stringify(preTemplates))
-    // } catch(e) {
-    //   let preTemplates: Array<ItemplateImg> = []
-    //   preTemplates.push(imageObj)
-    //   localStorage.setItem('templates', JSON.stringify(preTemplates))
-    // }
-    
   })
 }
 
