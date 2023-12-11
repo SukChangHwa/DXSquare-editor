@@ -1,6 +1,6 @@
 <template>
   <nav
-    class="md:left-0 md:block md:fixed md:top-0 md:bottom-0 md:overflow-y-auto md:flex-row md:flex-nowrap md:overflow-hidden shadow-xl bg-white flex flex-wrap items-center justify-between relative md:w-64 z-10 py-4 px-6"
+    class="w-52 md:left-0 md:block md:fixed md:top-0 md:bottom-0 md:overflow-y-auto md:flex-row md:flex-nowrap md:overflow-hidden shadow-xl bg-white flex flex-wrap items-center justify-between relative z-10 py-4 px-6"
   >
     <div
       class="md:flex-col md:items-stretch md:min-h-full md:flex-nowrap px-0 flex flex-wrap items-center justify-between w-full mx-auto"
@@ -18,7 +18,7 @@
         class="md:block text-left md:pb-2 text-blueGray-600 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-4 px-0"
         to="/"
       >
-        Vue Notus
+        DXSquare
       </router-link>
       <!-- User -->
       <ul class="md:hidden items-center flex flex-wrap list-none">
@@ -75,221 +75,10 @@
         <h6
           class="md:min-w-full text-blueGray-500 text-xs uppercase font-bold block pt-1 pb-4 no-underline"
         >
-          컴포넌트
+          {{ `1 / ${templateImages.length} 페이지` }}
         </h6>
         <!-- Navigation -->
-
-        <ul class="md:flex-col md:min-w-full flex flex-col list-none">
-          <li class="items-center">
-            <p
-              id="input-comp"
-              draggable="true"
-              class="text-xs uppercase py-3 font-bold block text-blueGray-700 hover:text-blueGray-500"
-            >
-              <i class="fas fa-tv mr-2 text-sm text-blueGray-300"></i>
-              입력 항목
-            </p>
-          </li>
-
-          <li class="items-center">
-            <p
-              id="text-comp"
-              draggable="true"
-              class="text-xs uppercase py-3 font-bold block text-blueGray-700 hover:text-blueGray-500"
-            >
-              <i class="fas fa-tools mr-2 text-sm text-blueGray-300"></i>
-              텍스트
-            </p>
-          </li>
-
-          <!-- <li class="items-center">
-            <router-link to="/admin/maps" v-slot="{ href, navigate, isActive }">
-              <a
-                :href="href"
-                @click="navigate"
-                class="text-xs uppercase py-3 font-bold block"
-                :class="[
-                  isActive
-                    ? 'text-emerald-500 hover:text-emerald-600'
-                    : 'text-blueGray-700 hover:text-blueGray-500',
-                ]"
-              >
-                <i
-                  class="fas fa-map-marked mr-2 text-sm"
-                  :class="[isActive ? 'opacity-75' : 'text-blueGray-300']"
-                ></i>
-                Maps
-              </a>
-            </router-link>
-          </li> -->
-        </ul>
-
-        <!-- Divider -->
-        <hr class="my-4 md:min-w-full" />
-        <!-- Heading -->
-        <!-- <h6
-          class="md:min-w-full text-blueGray-500 text-xs uppercase font-bold block pt-1 pb-4 no-underline"
-        >
-          Auth Layout Pages
-        </h6> -->
-        <!-- Navigation -->
-
-        <!-- <ul class="md:flex-col md:min-w-full flex flex-col list-none md:mb-4">
-          <li class="items-center">
-            <router-link
-              class="text-blueGray-700 hover:text-blueGray-500 text-xs uppercase py-3 font-bold block"
-              to="/auth/login"
-            >
-              <i class="fas fa-fingerprint text-blueGray-300 mr-2 text-sm"></i>
-              Login
-            </router-link>
-          </li>
-
-          <li class="items-center">
-            <router-link
-              class="text-blueGray-700 hover:text-blueGray-500 text-xs uppercase py-3 font-bold block"
-              to="/auth/register"
-            >
-              <i
-                class="fas fa-clipboard-list text-blueGray-300 mr-2 text-sm"
-              ></i>
-              Register
-            </router-link>
-          </li>
-        </ul> -->
-
-        <!-- Divider -->
-        <!-- <hr class="my-4 md:min-w-full" /> -->
-        <!-- Heading -->
-        <!-- <h6
-          class="md:min-w-full text-blueGray-500 text-xs uppercase font-bold block pt-1 pb-4 no-underline"
-        >
-          No Layout Pages
-        </h6> -->
-        <!-- Navigation -->
-
-        <!-- <ul class="md:flex-col md:min-w-full flex flex-col list-none md:mb-4">
-          <li class="items-center">
-            <router-link
-              class="text-blueGray-700 hover:text-blueGray-500 text-xs uppercase py-3 font-bold block"
-              to="/landing"
-            >
-              <i class="fas fa-newspaper text-blueGray-300 mr-2 text-sm"></i>
-              Landing Page
-            </router-link>
-          </li>
-
-          <li class="items-center">
-            <router-link
-              class="text-blueGray-700 hover:text-blueGray-500 text-xs uppercase py-3 font-bold block"
-              to="/profile"
-            >
-              <i class="fas fa-user-circle text-blueGray-300 mr-2 text-sm"></i>
-              Profile Page
-            </router-link>
-          </li>
-        </ul> -->
-
-        <!-- Divider -->
-        <!-- <hr class="my-4 md:min-w-full" /> -->
-        <!-- Heading -->
-        <!-- <h6
-          class="md:min-w-full text-blueGray-500 text-xs uppercase font-bold block pt-1 pb-4 no-underline"
-        >
-          Documentation
-        </h6> -->
-        <!-- Navigation -->
-        <!-- <ul class="md:flex-col md:min-w-full flex flex-col list-none md:mb-4">
-          <li class="inline-flex">
-            <a
-              href="https://www.creative-tim.com/learning-lab/tailwind/vue/colors/notus"
-              target="_blank"
-              class="text-blueGray-700 hover:text-blueGray-500 text-sm block mb-4 no-underline font-semibold"
-            >
-              <i
-                class="fas fa-paint-brush mr-2 text-blueGray-300 text-base"
-              ></i>
-              Styles
-            </a>
-          </li>
-
-          <li class="inline-flex">
-            <a
-              href="https://www.creative-tim.com/learning-lab/tailwind/vue/alerts/notus"
-              target="_blank"
-              class="text-blueGray-700 hover:text-blueGray-500 text-sm block mb-4 no-underline font-semibold"
-            >
-              <i class="fab fa-css3-alt mr-2 text-blueGray-300 text-base"></i>
-              CSS Components
-            </a>
-          </li>
-
-          <li class="inline-flex">
-            <a
-              href="https://www.creative-tim.com/learning-lab/tailwind/angular/overview/notus"
-              target="_blank"
-              class="text-blueGray-700 hover:text-blueGray-500 text-sm block mb-4 no-underline font-semibold"
-            >
-              <i class="fab fa-angular mr-2 text-blueGray-300 text-base"></i>
-              Angular
-            </a>
-          </li>
-
-          <li class="inline-flex">
-            <a
-              href="https://www.creative-tim.com/learning-lab/tailwind/js/overview/notus"
-              target="_blank"
-              class="text-blueGray-700 hover:text-blueGray-500 text-sm block mb-4 no-underline font-semibold"
-            >
-              <i class="fab fa-js-square mr-2 text-blueGray-300 text-base"></i>
-              Javascript
-            </a>
-          </li>
-
-          <li class="inline-flex">
-            <a
-              href="https://www.creative-tim.com/learning-lab/tailwind/nextjs/overview/notus"
-              target="_blank"
-              class="text-blueGray-700 hover:text-blueGray-500 text-sm block mb-4 no-underline font-semibold"
-            >
-              <i class="fab fa-react mr-2 text-blueGray-300 text-base"></i>
-              NextJS
-            </a>
-          </li>
-
-          <li class="inline-flex">
-            <a
-              href="https://www.creative-tim.com/learning-lab/tailwind/react/overview/notus"
-              target="_blank"
-              class="text-blueGray-700 hover:text-blueGray-500 text-sm block mb-4 no-underline font-semibold"
-            >
-              <i class="fab fa-react mr-2 text-blueGray-300 text-base"></i>
-              React
-            </a>
-          </li>
-
-          <li class="inline-flex">
-            <a
-              href="https://www.creative-tim.com/learning-lab/tailwind/svelte/overview/notus"
-              target="_blank"
-              class="text-blueGray-700 hover:text-blueGray-500 text-sm block mb-4 no-underline font-semibold"
-            >
-              <i class="fas fa-link mr-2 text-blueGray-300 text-base"></i>
-              Svelte
-            </a>
-          </li>
-
-          <li class="inline-flex">
-            <a
-              href="https://www.creative-tim.com/learning-lab/tailwind/vue/overview/notus"
-              target="_blank"
-              class="text-blueGray-700 hover:text-blueGray-500 text-sm block mb-4 no-underline font-semibold"
-            >
-              <i class="fab fa-vuejs mr-2 text-blueGray-300 text-base"></i>
-              VueJS
-            </a>
-          </li>
-        </ul> -->
+        <ThumbnailItem :templateImages="templateImages"></ThumbnailItem>
       </div>
     </div>
   </nav>
@@ -297,62 +86,20 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { onMounted } from 'vue'
-
-const dragging = function (e: any) {
-  e.dataTransfer.setData('Text', e.target.id)
-}
-
-const allowDrop = function (e: any) {
-  e.preventDefault()
-}
-
-const drop = function (e: any) {
-  e.preventDefault()
-  let data = e.dataTransfer.getData('Text')
-  console.log(data)
-
-  // eslint-disable-next-line
-  debugger
-  //here
-  const topPos = e.layerY - 20
-  const leftPos = e.layerX - 20
-
-  if (data == 'input-comp') {
-    let tempDiv = document.createElement('div')
-    tempDiv.setAttribute('style', `position:absolute; top: ${topPos}px; left:${leftPos}px;`)
-    let tempInput = document.createElement('input')
-    tempInput.setAttribute('style', 'border:1px solid #000; width: 100px; height: 30px;')
-
-    tempDiv.appendChild(tempInput)
-    e.target.appendChild(tempDiv)
-  } else if (data == 'text-comp') {
-    // <div style='position:absolute; top: ${topPos}, left:${leftPos}'><span style="font-size:12px;">텍스트</span></div>`
-
-    let tempDiv = document.createElement('div')
-    tempDiv.setAttribute('style', `position:absolute; top: ${topPos}px; left:${leftPos}px;`)
-    let tempText = document.createElement('span')
-    tempText.setAttribute('style', 'font-size:12px')
-    tempText.innerText = '텍스트'
-
-    tempDiv.appendChild(tempText)
-    e.target.appendChild(tempDiv)
-  }
-}
+import { useImageStore, type ItemplateImg } from '@/stores/image';
+import ThumbnailItem from './thumbnailItem.vue';
 
 const collapseShow = ref('hidden')
 const toggleCollapseShow = (classes: string) => {
   collapseShow.value = classes
 }
 
-// onMounted(() => {
-//   const inputCompCreateBtn = document.querySelector('#input-comp')
-//   const textCompCreateBtn = document.querySelector('#text-comp')
-//   const annotationLayer = document.querySelector('#annotationLayer')
+const imageStore = useImageStore()
 
-//   inputCompCreateBtn?.addEventListener('dragstart', dragging)
-//   textCompCreateBtn?.addEventListener('dragstart', dragging)
-//   annotationLayer?.addEventListener('drop', drop)
-//   annotationLayer?.addEventListener('dragover', allowDrop)
-// })
+const curTemplate = imageStore.getImage()
+const templateImages: ItemplateImg[] = new Array<ItemplateImg>()
+templateImages.push(curTemplate)
+
 </script>
+<style scoped>
+</style>
