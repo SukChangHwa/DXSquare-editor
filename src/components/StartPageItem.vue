@@ -111,7 +111,7 @@
                   <div class="mb-4 text-blueGray-500">
                     템플릿을 이용해 <br />계약서 서식을 만들 수 있어요.
                     <a
-                      href="/doc/dashboard"
+                      @click="showSelectTemplateModal(true)"
                       class="get-started text-white mt-5 font-bold px-6 py-4 rounded outline-none focus:outline-none mr-1 mb-1 bg-emerald-500 active:bg-emerald-600 uppercase text-sm shadow hover:shadow-lg ease-linear transition-all duration-150 block"
                     >
                       입력 항목 배치하기
@@ -220,8 +220,24 @@
       </div>
     </div>
   </section>
+  <TemplateSelectModal v-if="isShowTemplateModal" :title="'템플릿 선택하기'" @cancel="(val)=> showSelectTemplateModal(val)" @confirm="(item)=> moveTemplateEditPage(item)"></TemplateSelectModal>
 </template>
 <script setup lang="ts">
+import { ref } from 'vue'
 import documentation from '@/assets/images/documentation.png'
+import TemplateSelectModal from '@/components/modal/TemplateSelectModal.vue'
+import {useImageStore, type ItemplateImg} from '@/stores/image'
+import router from '@/router'
+
+const imageStore = useImageStore()
+const isShowTemplateModal = ref(false)
+const showSelectTemplateModal = (val)=> {
+  isShowTemplateModal.value = val
+}
+
+const moveTemplateEditPage = (item: ItemplateImg)=>{
+  imageStore.saveImage(item)
+  router.push({path: '/doc/dashboard'})
+}
 </script>
 <style scoped></style>

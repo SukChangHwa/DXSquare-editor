@@ -2,7 +2,7 @@
   <teleport to="body">
     <div class="modal">
       <div
-        class="container flex flex-col bg-white space-y-10 mx-auto my-20 w-4/6 h-2/6 px-7 py-5 rounded-lg"
+        class="container flex flex-col bg-white space-y-10 mx-auto my-20 w-4/6 h-2/6 px-7 py-5 rounded-lg modal-window"
       >
         <div class="flex space-x-2">
           <slot name="title"></slot>
@@ -31,5 +31,9 @@
   background-color: rgba(0, 0, 0, 0.5);
   padding: 30px;
   box-shadow: 0 4px 16px #00000026;
+}
+
+.modal-window {
+  min-height: 400px;
 }
 </style>

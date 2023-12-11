@@ -16,7 +16,6 @@
 </template>
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import sample from '@/assets/images/sample-1.png'
 import { useImageStore, type ItemplateImg } from '@/stores/image'
 
 const imageStore = useImageStore()
@@ -99,9 +98,11 @@ onMounted(() => {
   annotationLayer?.addEventListener('drop', drop)
   annotationLayer?.addEventListener('dragover', allowDrop)
 
-  const imgList: ItemplateImg[] =
-    JSON.parse(localStorage.getItem('templates') ?? '') ?? new Array<ItemplateImg>()
-  backgroundImage.value = imgList[0].dataStr
+  let templateImg:ItemplateImg = imageStore.getImage()
+
+  // const imgList: ItemplateImg[] =
+  //   JSON.parse(localStorage.getItem('templates') ?? '') ?? new Array<ItemplateImg>()
+  backgroundImage.value = templateImg.dataStr
 })
 </script>
 
