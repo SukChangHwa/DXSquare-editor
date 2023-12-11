@@ -22,58 +22,75 @@ import { useImageStore, type ItemplateImg } from '@/stores/image'
 const imageStore = useImageStore()
 const backgroundImage = ref('')
 
-const allowDrop = function (e: any) {
+const allowDrop = (e) => {
   e.preventDefault()
 }
 
-const drop = function (e: any) {
+const moveElementDrop = (e) => {
+  e.dataTransfer.setData('Text', e.target.id)
+}
+
+const drop = (e) => {
   e.preventDefault()
   let data = e.dataTransfer.getData('Text')
-  console.log(data)
 
   const topPos = e.layerY - 20
   const leftPos = e.layerX - 20
+  let idSeq = new Date().getTime()
 
-  let tempDiv = document.createElement('div')
-  tempDiv.setAttribute('style', `position:absolute; top: ${topPos}px; left:${leftPos}px;`)
+  if(data.indexOf('dxcomplayer') > -1) {
+    let compLayerElm = document.getElementById(data)
+    compLayerElm?.setAttribute('style', `position:absolute; top: ${topPos}px; left:${leftPos}px;`)
 
-  if (data == 'comp-input') {
-    let tempInput = document.createElement('input')
-    tempInput.setAttribute('style', 'border:1px solid #000; width: 100px; height: 30px;')
+  } else {
+    let tempDiv = document.createElement('div')
+    tempDiv.setAttribute('style', `position:absolute; top: ${topPos}px; left:${leftPos}px; z-index: 999;`)
+    tempDiv.setAttribute('id', `dxcomplayer_${data}_${idSeq}`)
+    tempDiv.setAttribute('draggable', 'true')
+    tempDiv.addEventListener('dragstart', moveElementDrop)
 
-    tempDiv.appendChild(tempInput)
-    e.target.appendChild(tempDiv)
-  } else if (data == 'comp-text') {
-    let tempText = document.createElement('span')
-    tempText.setAttribute('style', 'font-size:12px')
-    tempText.innerText = '텍스트'
 
-    tempDiv.appendChild(tempText)
-    e.target.appendChild(tempDiv)
-  } else if (data == 'comp-check') {
-    let tempCheck = document.createElement('input')
-    tempCheck.type = 'checkbox'
-    // tempCheck.setAttribute('style', 'font-size:12px')
-    // tempCheck.setAttribute('type', 'check')
+    if (data == 'comp-input') {
+      let tempInput = document.createElement('input')
+      tempInput.setAttribute('style', 'border:1px solid #000; width: 100px; height: 30px;')
 
-    tempDiv.appendChild(tempCheck)
-    e.target.appendChild(tempDiv)
-  } else if (data == 'comp-radio') {
-    let tempRadio = document.createElement('input')
-    tempRadio.type = 'radio'
 
-    tempDiv.appendChild(tempRadio)
-    e.target.appendChild(tempDiv)
-  } else if (data == 'comp-signature') {
-    let tempSignComp = document.createElement('div')
-    tempSignComp.setAttribute(
-      'style',
-      'font-size:12px;border:1px solid #000; width: 30px; height: 30px;'
-    )
+      tempDiv.appendChild(tempInput)
+      e.target.appendChild(tempDiv)
+    } else if (data == 'comp-text') {
+      let tempText = document.createElement('span')
+      tempText.setAttribute('style', 'font-size:12px')
+      tempText.innerText = '텍스트'
 
-    tempDiv.appendChild(tempSignComp)
-    e.target.appendChild(tempDiv)
+      tempDiv.appendChild(tempText)
+      e.target.appendChild(tempDiv)
+    } else if (data == 'comp-check') {
+      let tempCheck = document.createElement('input')
+      tempCheck.type = 'checkbox'
+      // tempCheck.setAttribute('style', 'font-size:12px')
+      // tempCheck.setAttribute('type', 'check')
+
+      tempDiv.appendChild(tempCheck)
+      e.target.appendChild(tempDiv)
+    } else if (data == 'comp-radio') {
+      let tempRadio = document.createElement('input')
+      tempRadio.type = 'radio'
+
+      tempDiv.appendChild(tempRadio)
+      e.target.appendChild(tempDiv)
+    } else if (data == 'comp-signature') {
+      let tempSignComp = document.createElement('div')
+      tempSignComp.setAttribute(
+        'style',
+        'font-size:12px;border:1px solid #000; width: 30px; height: 30px;'
+      )
+
+      tempDiv.appendChild(tempSignComp)
+      e.target.appendChild(tempDiv)
+    }
   }
+
+  
 }
 
 onMounted(() => {

@@ -134,9 +134,6 @@ const saveDocToHtml = () => {
   console.log('click')
   // TODO html로 저장
   const name = document.getElementById('doc-container')
-  console.log(name)
-  
-  debugger;
 
   let bodyStr = name.parentElement.innerHTML
   let htmlStr = '<html lang="en">'
@@ -181,11 +178,18 @@ const saveTemplateImage = (title) => {
       fileName: title
     }
 
-    let preTemplates: Array<ItemplateImg> =
-      JSON.parse(localStorage.getItem('templates') ?? '') ?? new Array<ItemplateImg>()
-    preTemplates.push(imageObj)
-    localStorage.setItem('templates', JSON.stringify(preTemplates))
-    // imageStore.saveImage(imageObj)
+    try {
+      let preTemplates: Array<ItemplateImg> =
+        JSON.parse(localStorage.getItem('templates') ?? '') ?? new Array<ItemplateImg>()
+      preTemplates.push(imageObj)
+      localStorage.setItem('templates', JSON.stringify(preTemplates))
+      // imageStore.saveImage(imageObj)  
+    } catch(e) {
+      let preTemplates: Array<ItemplateImg> = []
+      preTemplates.push(imageObj)
+      localStorage.setItem('templates', JSON.stringify(preTemplates))
+    }
+    
   })
 }
 
