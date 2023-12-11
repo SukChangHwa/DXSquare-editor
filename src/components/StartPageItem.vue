@@ -236,7 +236,7 @@ const showSelectTemplateModal = (val)=> {
 }
 
 const moveTemplateEditPage = (item: ItemplateImg)=>{
-  imageStore.saveImage(item)
+  imageStore.setSelectImage(item.fileName)
   router.push({path: '/doc/dashboard'})
 }
 </script>

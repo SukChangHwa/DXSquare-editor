@@ -98,7 +98,8 @@ onMounted(() => {
   annotationLayer?.addEventListener('drop', drop)
   annotationLayer?.addEventListener('dragover', allowDrop)
 
-  let templateImg:ItemplateImg = imageStore.getImage()
+  const selectTemplateNm = imageStore.getSelectImage()
+  let templateImg:ItemplateImg = imageStore.getImage(selectTemplateNm)
 
   // const imgList: ItemplateImg[] =
   //   JSON.parse(localStorage.getItem('templates') ?? '') ?? new Array<ItemplateImg>()

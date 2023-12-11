@@ -78,16 +78,24 @@
           {{ `1 / ${templateImages.length} 페이지` }}
         </h6>
         <!-- Navigation -->
-        <ThumbnailItem :templateImages="templateImages"></ThumbnailItem>
+        <ThumbnailItem v-if="props.isShowThumbnail"></ThumbnailItem>
+        
       </div>
     </div>
   </nav>
+  
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useImageStore, type ItemplateImg } from '@/stores/image';
 import ThumbnailItem from './thumbnailItem.vue';
+
+
+const props = defineProps({
+  isShowThumbnail: {type: Boolean, required: false, default: false}
+})
+
 
 const collapseShow = ref('hidden')
 const toggleCollapseShow = (classes: string) => {
@@ -95,10 +103,15 @@ const toggleCollapseShow = (classes: string) => {
 }
 
 const imageStore = useImageStore()
-
-const curTemplate = imageStore.getImage()
+const selectTemplateNm = imageStore.getSelectImage()
+const curTemplate = imageStore.getImage(selectTemplateNm)
 const templateImages: ItemplateImg[] = new Array<ItemplateImg>()
 templateImages.push(curTemplate)
+
+onMounted(()=>{
+  console.log(props.isShowThumbnail)
+  
+})
 
 </script>
 <style scoped>

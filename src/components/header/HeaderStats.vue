@@ -30,7 +30,7 @@
             </button>
           </div>
         </div>
-        <div v-show="props.isShowTemplateSaveBtn">
+        <div v-if="props.isShowTemplateSaveBtn">
           <button @click="showSaveModal">템플릿 저장하기</button>
         </div>
         <div class="flex" v-show="props.isShow">
@@ -100,7 +100,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import { type ItemplateImg } from '@/stores/image'
+import { useImageStore, type ItemplateImg } from '@/stores/image'
 import saveModal from '@/components/modal/TemplateSaveModal.vue'
 import htmlToCanvas from 'html2canvas'
 import Constant from '@/assets/ts/constant'
@@ -115,6 +115,8 @@ const props = withDefaults(defineProps<IProp>(), {
   isShow: true,
   isShowTemplateSaveBtn: false
 })
+
+const imageStore = useImageStore()
 
 const isShowSaveModal = ref(false)
 
@@ -178,17 +180,19 @@ const saveTemplateImage = (title) => {
       fileName: title
     }
 
-    try {
-      let preTemplates: Array<ItemplateImg> =
-        JSON.parse(localStorage.getItem('templates') ?? '') ?? new Array<ItemplateImg>()
-      preTemplates.push(imageObj)
-      localStorage.setItem('templates', JSON.stringify(preTemplates))
-      // imageStore.saveImage(imageObj)  
-    } catch(e) {
-      let preTemplates: Array<ItemplateImg> = []
-      preTemplates.push(imageObj)
-      localStorage.setItem('templates', JSON.stringify(preTemplates))
-    }
+    imageStore.saveImage(imageObj)
+
+  
+    // try {
+    //   let preTemplates: Array<ItemplateImg> =
+    //     JSON.parse(localStorage.getItem('templates') ?? '') ?? new Array<ItemplateImg>()
+    //   preTemplates.push(imageObj)
+    //   localStorage.setItem('templates', JSON.stringify(preTemplates))
+    // } catch(e) {
+    //   let preTemplates: Array<ItemplateImg> = []
+    //   preTemplates.push(imageObj)
+    //   localStorage.setItem('templates', JSON.stringify(preTemplates))
+    // }
     
   })
 }

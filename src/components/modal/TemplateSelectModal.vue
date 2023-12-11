@@ -26,18 +26,15 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import Modal from '@/components/ModalItem.vue'
-import { type ItemplateImg } from '@/stores/image';
+import { useImageStore, type ItemplateImg } from '@/stores/image';
 const props = defineProps({
     title: String
 })
 
+const imageStore = useImageStore()
 let templateList: ItemplateImg[];
 
-try {
-    templateList = JSON.parse(localStorage.getItem('templates') ?? '') ?? new Array<ItemplateImg>()
-} catch(e) {
-    templateList = new Array<ItemplateImg>
-}
+templateList = imageStore.getAllImage()
 
 const emit = defineEmits(['confirm', 'cancel'])
 
