@@ -220,33 +220,38 @@
       </div>
     </div>
   </section>
-  <TemplateSelectModal v-if="isShowTemplateModal" :title="'템플릿 선택하기'" @cancel="(val)=> showSelectTemplateModal(val)" @confirm="(item)=> moveTemplateEditPage(item)"></TemplateSelectModal>
+  <TemplateSelectModal
+    v-if="isShowTemplateModal"
+    :title="'템플릿 선택하기'"
+    @cancel="(val) => showSelectTemplateModal(val)"
+    @confirm="(item) => moveTemplateEditPage(item)"
+  ></TemplateSelectModal>
 </template>
 <script setup lang="ts">
 import { ref } from 'vue'
 import documentation from '@/assets/images/documentation.png'
 import TemplateSelectModal from '@/components/modal/TemplateSelectModal.vue'
-import {useImageStore, type ItemplateImg} from '@/stores/image'
+import { useDocStore, type ItemplateImg } from '@/stores/document'
 import { useServiceStore } from '@/stores/service'
 import router from '@/router'
 
-const imageStore = useImageStore()
+const imageStore = useDocStore()
 const serviceStore = useServiceStore()
 
 const isShowTemplateModal = ref(false)
-const showSelectTemplateModal = (val)=> {
+const showSelectTemplateModal = (val) => {
   isShowTemplateModal.value = val
 }
 
 const goCreateTemplatePage = () => {
   serviceStore.setCreateBarStatus(false)
-  router.push({path: '/doc/editor'})
+  router.push({ path: '/doc/editor' })
 }
 
-const moveTemplateEditPage = (item: ItemplateImg)=>{
-  imageStore.setSelectImage(item.fileName)
+const moveTemplateEditPage = (item: ItemplateImg) => {
+  imageStore.setSelectDocId(item.id)
   serviceStore.setCreateBarStatus(true)
-  router.push({path: '/doc/dashboard'})
+  router.push({ path: '/doc/dashboard' })
 }
 </script>
 <style scoped></style>

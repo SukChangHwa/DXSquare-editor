@@ -78,41 +78,35 @@
           {{ `1 / ${templateImages.length} 페이지` }}
         </h6>
         <!-- Navigation -->
-        <ThumbnailItem v-if="imageStore.getSelectImage()"></ThumbnailItem>
-        
+        <ThumbnailItem v-if="imageStore.getSelectDocId()"></ThumbnailItem>
       </div>
     </div>
   </nav>
-  
 </template>
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
-import { useImageStore, type ItemplateImg } from '@/stores/image';
-import ThumbnailItem from './thumbnailItem.vue';
-
+import { useDocStore, type ItemplateImg } from '@/stores/document'
+import ThumbnailItem from './thumbnailItem.vue'
 
 const props = defineProps({
-  isShowThumbnail: {type: Boolean, required: false, default: false}
+  isShowThumbnail: { type: Boolean, required: false, default: false }
 })
-
 
 const collapseShow = ref('hidden')
 const toggleCollapseShow = (classes: string) => {
   collapseShow.value = classes
 }
 
-const imageStore = useImageStore()
-const selectTemplateNm = imageStore.getSelectImage()
-const curTemplate = imageStore.getImage(selectTemplateNm)
+const imageStore = useDocStore()
+const selectTemplateId = imageStore.getSelectDocId()
+const curTemplate = imageStore.getDocument(selectTemplateId)
 const templateImages: ItemplateImg[] = new Array<ItemplateImg>()
 templateImages.push(curTemplate)
 
-onMounted(()=>{
+onMounted(() => {
   console.log(props.isShowThumbnail)
-  
 })
-
 </script>
-<style scoped>
-</style>
+<style scoped></style>
+@/stores/document

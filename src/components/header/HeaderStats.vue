@@ -1,12 +1,15 @@
 <template>
   <!-- Header -->
-  <div class="relative bg-emerald-600 md:pt-32 pb-32 pt-12">
-    <div class="px-4 md:px-10 mx-auto w-full">
+  <!-- <div class="relative bg-emerald-600 md:pt-32 pb-32 pt-12"> -->
+    <!-- <div class="px-4 md:px-10 mx-auto w-full"> -->
       <div>
         <!-- Card stats -->
-        <div class="flex flex-nowrap justify-between bg-white p-2 mb-7">
-          <div class="title">
+        <!-- <DocumentControls></DocumentControls> -->
+
+        <!-- <div class="flex flex-nowrap justify-between bg-white p-2 mb-7">
+          <div class="title space-x-3">
             <span>표준 근로계약서</span>
+            <button @click="showTemplateEditor"><i class="fa-regular fa-pen-to-square"></i>템플릿 편집</button>
           </div>
           <div class="doc-control-1 space-x-3">
             <select class="pt-0.5 pr-10 pb-0.5 pl-2.5" name="zoom-value">
@@ -29,10 +32,8 @@
               <i class="fa-solid fa-arrow-right-from-bracket"></i>
             </button>
           </div>
-        </div>
-        <!-- <div v-if="props.isShowTemplateSaveBtn">
-          <button @click="showSaveModal">템플릿 저장하기</button>
         </div> -->
+
         <div class="flex" v-show="props.isShow">
           <div class="w-full lg:w-6/12 xl:w-3/12 px-4">
             <card-stats
@@ -84,28 +85,16 @@
           </div>
         </div>
       </div>
-    </div>
-  </div>
-  <saveModal
-    v-if="isShowSaveModal"
-    :title="'템플릿 저장'"
-    @cancel="hideSaveModal"
-    @confirm="
-      (title) => {
-        saveTemplateImage(title)
-      }
-    "
-  ></saveModal>
+    <!-- </div> -->
+  <!-- </div> -->
+  
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import { useImageStore, type ItemplateImg } from '@/stores/image'
-import { useServiceStore } from '@/stores/service'
-import saveModal from '@/components/modal/TemplateSaveModal.vue'
-import htmlToCanvas from 'html2canvas'
 import Constant from '@/assets/ts/constant'
 import CardStats from '@/components/card/CardStats.vue'
+import DocumentControls from '@/components/header/DocumentControls.vue'
 
 interface IProp {
   isShow?: boolean
@@ -116,80 +105,12 @@ const props = withDefaults(defineProps<IProp>(), {
   isShow: true,
   isShowTemplateSaveBtn: false
 })
-const serviceStore = useServiceStore()
-const imageStore = useImageStore()
 
-const isShowSaveModal = ref(false)
 
 const dragging = function (e: any) {
   e.dataTransfer.setData('Text', e.target.id)
 }
 
-const showSaveModal = () => {
-  let isShowCreateBar = serviceStore.getCreateBarStatus() 
-  if(isShowCreateBar) {
-    saveDocToHtml()
-  } else {
-    isShowSaveModal.value = true
-  }
-  
-}
-
-const hideSaveModal = () => {
-  isShowSaveModal.value = false
-}
-
-const saveDocToHtml = () => {
-  console.log('click')
-  // TODO html로 저장
-  const name = document.getElementById('doc-container')
-
-  let bodyStr = name.parentElement.innerHTML
-  let htmlStr = '<html lang="en">'
-  htmlStr += '<head>'
-  htmlStr += '<meta charset="UTF-8">'
-  htmlStr += '<meta charset="UTF-8">'
-  htmlStr += '<meta name="viewport" content="width=device-width, inital-scale=1.0">'
-  htmlStr += '<title>Document</title>'
-  htmlStr += '</head>'
-  htmlStr += '<body>'
-  htmlStr += bodyStr.replace(/(data-v-\w*\=\"\"\s)/gi, '')
-  htmlStr += '</body>'
-  htmlStr += '</html>'
-
-  
-  const parser = new DOMParser()
-  const doc = parser.parseFromString(htmlStr, 'text/html')
-
-  let fileName = 'document.html'
-  
-  const blob = new Blob([htmlStr], {type: 'text/html'})
-  const path = window.URL.createObjectURL(blob)
-
-  const link = document.createElement('a')
-  link.href = path
-  link.download = fileName
-  link.click()
-  link.remove() // IE 미지원
-
-
-  
-}
-
-const saveTemplateImage = (title) => {
-  const editorHtmlElem = document.getElementsByClassName('fr-element')
-
-  htmlToCanvas(editorHtmlElem[0]).then((canvas) => {
-    const t = canvas.toDataURL()
-    console.log(t)
-    const imageObj: ItemplateImg = {
-      dataStr: t,
-      fileName: title
-    }
-
-    imageStore.saveImage(imageObj)
-  })
-}
 
 const compBtnList: { [key: string]: string } = Constant.COMPONENT_CREATE_BUTTON_ID_LIST
 

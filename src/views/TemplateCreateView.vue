@@ -1,18 +1,26 @@
 <template>
   <div>
-    <div class="flex flex-wrap">
-      <div class="w-full h-full mb-12 xl:mb-0 px-4">
-        <froala id="edit" :tag="'textarea'" :config="config"></froala>
-      </div>
-    </div>
+    <EditorItem :contents="htmlContents"></EditorItem>
   </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import htmlToPdf from 'html2pdf.js'
+import EditorItem from '@/components/editor/EditorItem.vue'
+import { useDocStore } from '@/stores/document';
 // import FroalaEditor from 'froala-editor'
 // import htmlToCanvas from 'html2canvas'
+
+interface ICreateForm {
+  docId?: string
+}
+const props = withDefaults(defineProps<ICreateForm>(), {
+  docId: ''
+})
+
+const docStore = useDocStore()
+const htmlContents = docStore.getDocument(props.docId).htmlStr
 
 const config = ref({
   // events: {

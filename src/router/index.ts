@@ -20,21 +20,17 @@ const router = createRouter({
       children: [
         {
           path: '/doc/dashboard',
-          component: Dashboard
+          name: 'documentEditor',
+          component: Dashboard,
+          props: true
         },
         {
-          path: '/doc/editor',
-          component: TemplateCreateView
+          path: '/doc/editor/:docId?',
+          name: 'templateEditor',
+          component: TemplateCreateView,
+          props: true
         }
       ]
-    },
-    {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/AboutView.vue')
     }
   ]
 })

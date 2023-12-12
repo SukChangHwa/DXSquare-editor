@@ -1,23 +1,22 @@
 <template>
-    <ul class="md:flex-col md:min-w-full flex flex-col list-none">
-              <li class="items-center" v-for="(item, idx) of templateImages" :key="idx">
-                <div class="border p-2 thumbnail">
-                  <img class="thumbnail-img" :src="item.dataStr">
-                </div>
-              </li>
-            </ul>
+  <ul class="md:flex-col md:min-w-full flex flex-col list-none">
+    <li class="items-center" v-for="(item, idx) of templateImages" :key="idx">
+      <div class="border p-2 thumbnail">
+        <img class="thumbnail-img" :src="item.imgDataStr" />
+      </div>
+    </li>
+  </ul>
 </template>
 <script setup lang="ts">
-import { useImageStore, type ItemplateImg } from '@/stores/image';
+import { useDocStore, type ItemplateImg } from '@/stores/document'
 // const props = defineProps({
 //     templateImages: {type: Array<ItemplateImg>, required: false}
 // })
 // console.log(props.templateImages)
 
-
-const imageStore = useImageStore()
-const selectTemplateNm = imageStore.getSelectImage()
-const curTemplate = imageStore.getImage(selectTemplateNm)
+const docStore = useDocStore()
+const selectTemplateId = docStore.getSelectDocId()
+const curTemplate = docStore.getDocument(selectTemplateId)
 const templateImages: ItemplateImg[] = new Array<ItemplateImg>()
 templateImages.push(curTemplate)
 </script>
@@ -30,3 +29,4 @@ templateImages.push(curTemplate)
   height: 100%;
 }
 </style>
+@/stores/document

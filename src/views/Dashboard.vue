@@ -1,5 +1,6 @@
 <template>
   <div>
+    <Sidebar />
     <div class="flex flex-wrap">
       <div class="w-full h-full mb-12 xl:mb-0 px-4">
         <!-- <froala v-if="isShowEditor === true" class="w-full" id="edit" :tag="'textarea'" :config="config"></froala> -->
@@ -15,11 +16,35 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
-import { useImageStore, type ItemplateImg } from '@/stores/image'
+import { ref, onMounted, watch } from 'vue'
+import { useDocStore, type ItemplateImg } from '@/stores/document'
 
-const imageStore = useImageStore()
+
+interface IProp {
+  isUpdateTemplate?: string,
+  updateTemplateId?: string
+}
+const props = withDefaults(defineProps<IProp>(), {
+  isUpdateTemplate: 'false',
+  updateTemplateId:''
+})
+
+
+
+const docStore = useDocStore()
 const backgroundImage = ref('')
+
+
+const showFlag = ref(props.isUpdateTemplate)
+
+
+watch(showFlag, (cur)=>{
+  if(cur === 'true') {
+    backgroundImage.value = docStore.getDocument(props.updateTemplateId).imgDataStr
+  }
+})
+
+
 
 const allowDrop = (e) => {
   e.preventDefault()
@@ -37,22 +62,22 @@ const drop = (e) => {
   const leftPos = e.layerX - 20
   let idSeq = new Date().getTime()
 
-  if(data.indexOf('dxcomplayer') > -1) {
+  if (data.indexOf('dxcomplayer') > -1) {
     let compLayerElm = document.getElementById(data)
     compLayerElm?.setAttribute('style', `position:absolute; top: ${topPos}px; left:${leftPos}px;`)
-
   } else {
     let tempDiv = document.createElement('div')
-    tempDiv.setAttribute('style', `position:absolute; top: ${topPos}px; left:${leftPos}px; z-index: 999;`)
+    tempDiv.setAttribute(
+      'style',
+      `position:absolute; top: ${topPos}px; left:${leftPos}px; z-index: 999;`
+    )
     tempDiv.setAttribute('id', `dxcomplayer_${data}_${idSeq}`)
     tempDiv.setAttribute('draggable', 'true')
     tempDiv.addEventListener('dragstart', moveElementDrop)
 
-
     if (data == 'comp-input') {
       let tempInput = document.createElement('input')
       tempInput.setAttribute('style', 'border:1px solid #000; width: 100px; height: 30px;')
-
 
       tempDiv.appendChild(tempInput)
       e.target.appendChild(tempDiv)
@@ -88,8 +113,6 @@ const drop = (e) => {
       e.target.appendChild(tempDiv)
     }
   }
-
-  
 }
 
 onMounted(() => {
@@ -98,12 +121,12 @@ onMounted(() => {
   annotationLayer?.addEventListener('drop', drop)
   annotationLayer?.addEventListener('dragover', allowDrop)
 
-  const selectTemplateNm = imageStore.getSelectImage()
-  let templateImg:ItemplateImg = imageStore.getImage(selectTemplateNm)
+  const selectTemplateId = docStore.getSelectDocId()
+  let templateImg: ItemplateImg = docStore.getDocument(selectTemplateId)
 
   // const imgList: ItemplateImg[] =
   //   JSON.parse(localStorage.getItem('templates') ?? '') ?? new Array<ItemplateImg>()
-  backgroundImage.value = templateImg.dataStr
+  backgroundImage.value = templateImg.imgDataStr
 })
 </script>
 
