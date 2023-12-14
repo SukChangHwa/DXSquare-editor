@@ -254,7 +254,7 @@ const moveTemplateEditPage = (item: ItemplateImg) => {
 }
 
 const runDocTest = () => {
-  
+  window.open('/doc', '_blank', 'width=1280,height=720')
 }
 
 </script>
