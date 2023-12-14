@@ -86,14 +86,13 @@
                   >
                     <i class="fas fa-file-alt"></i>
                   </div>
-                  <h6 class="text-xl mb-1 font-semibold">TDB</h6>
+                  <h6 class="text-xl mb-1 font-semibold">서식 테스트(DEV)</h6>
                   <div class="mb-4 text-blueGray-500">
                     <a
-                      href="https://www.creative-tim.com/learning-lab/tailwind/vue/overview/notus?ref=vn-index"
-                      target="_blank"
                       class="get-started text-white mt-5 font-bold px-6 py-4 rounded outline-none focus:outline-none mr-1 mb-1 bg-emerald-500 active:bg-emerald-600 uppercase text-sm shadow hover:shadow-lg ease-linear transition-all duration-150 block"
+                      @click="runDocTest"
                     >
-                      TBD
+                      계약 서식 실행 테스트
                     </a>
                   </div>
                 </div>
@@ -253,5 +252,10 @@ const moveTemplateEditPage = (item: ItemplateImg) => {
   serviceStore.setCreateBarStatus(true)
   router.push({ path: '/doc/dashboard' })
 }
+
+const runDocTest = () => {
+  
+}
+
 </script>
 <style scoped></style>

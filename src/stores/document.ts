@@ -29,7 +29,7 @@ export const useDocStore = defineStore(
     }
 
     function getSelectDocName() {
-      let selectDocInfo = doc.value.find((el) => el.id == selDocId.value)
+      let selectDocInfo = doc.value.find((el:ItemplateImg) => el.id == selDocId.value)
       return selectDocInfo?.fileName || ''
     }
 

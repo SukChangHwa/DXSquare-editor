@@ -6,7 +6,8 @@
         <!-- <froala v-if="isShowEditor === true" class="w-full" id="edit" :tag="'textarea'" :config="config"></froala> -->
         <div class="w-full">
           <div id="doc-container" class="layer">
-            <img :src="backgroundImage" />
+            <!-- <img :src="backgroundImage" /> -->
+            <div id="templateLayer" v-html="htmlstring"></div>
             <canvas class="canvas-div"></canvas>
             <div id="annotationLayer" class="annotation-layer"></div>
           </div>
@@ -33,6 +34,7 @@ const props = withDefaults(defineProps<IProp>(), {
 
 const docStore = useDocStore()
 const backgroundImage = ref('')
+const htmlstring = ref()
 
 
 const showFlag = ref(props.isUpdateTemplate)
@@ -41,10 +43,15 @@ const showFlag = ref(props.isUpdateTemplate)
 watch(showFlag, (cur)=>{
   if(cur === 'true') {
     backgroundImage.value = docStore.getDocument(props.updateTemplateId).imgDataStr
+    htmlstring.value = docStore.getDocument(props.updateTemplateId).htmlStr
   }
 })
 
 
+const testSign = (e) => {
+  console.log('asdasdasdas');
+  
+}
 
 const allowDrop = (e) => {
   e.preventDefault()
@@ -109,6 +116,8 @@ const drop = (e) => {
         'font-size:12px;border:1px solid #000; width: 30px; height: 30px;'
       )
 
+      tempSignComp.addEventListener('click', testSign)
+
       tempDiv.appendChild(tempSignComp)
       e.target.appendChild(tempDiv)
     }
@@ -127,6 +136,12 @@ onMounted(() => {
   // const imgList: ItemplateImg[] =
   //   JSON.parse(localStorage.getItem('templates') ?? '') ?? new Array<ItemplateImg>()
   backgroundImage.value = templateImg.imgDataStr
+
+  
+  htmlstring.value = templateImg.htmlStr
+  // backgroundImage.value = docStore.getDocument(props.updateTemplateId).imgDataStr
+  // let elm = document.getElementById('templateLayer')
+  // elm.innerHTML = (docStore.getDocument(props.updateTemplateId) as ItemplateImg).htmlStr
 })
 </script>
 
