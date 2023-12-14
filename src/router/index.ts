@@ -3,6 +3,7 @@ import HomeView from '@/views/HomeView.vue'
 import DocumentEditView from '@/views/DocumentEditView.vue'
 import Dashboard from '@/views/Dashboard.vue'
 import TemplateCreateView from '@/views/TemplateCreateView.vue'
+import DocumentTestPreview from '@/views/DocumentTestPreview.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -31,6 +32,12 @@ const router = createRouter({
           props: true
         }
       ]
+    },
+    {
+      path: '/preview',
+      name: 'preview',
+      component: DocumentTestPreview,
+      props: true
     }
   ]
 })

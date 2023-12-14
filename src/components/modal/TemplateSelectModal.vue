@@ -30,15 +30,15 @@
 // TODO 저장된 템플릿이 없을 때 없다는 표시 
 import { ref } from 'vue'
 import Modal from '@/components/ModalItem.vue'
-import { useDocStore, type ItemplateImg } from '@/stores/document'
+import { useTemplateStore, type ItemplateImg } from '@/stores/document'
 const props = defineProps({
   title: String
 })
 
-const imageStore = useDocStore()
+const imageStore = useTemplateStore()
 let templateList: ItemplateImg[]
 
-templateList = imageStore.getAllDoc()
+templateList = imageStore.getAllTemplates()
 
 const emit = defineEmits(['confirm', 'cancel'])
 

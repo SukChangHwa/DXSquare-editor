@@ -18,7 +18,7 @@
 </template>
 <script setup lang="ts">
 import { ref, onMounted, watch } from 'vue'
-import { useDocStore, type ItemplateImg } from '@/stores/document'
+import { useTemplateStore, type ItemplateImg } from '@/stores/document'
 
 
 interface IProp {
@@ -32,7 +32,7 @@ const props = withDefaults(defineProps<IProp>(), {
 
 
 
-const docStore = useDocStore()
+const docStore = useTemplateStore()
 const backgroundImage = ref('')
 const htmlstring = ref()
 
@@ -42,8 +42,8 @@ const showFlag = ref(props.isUpdateTemplate)
 
 watch(showFlag, (cur)=>{
   if(cur === 'true') {
-    backgroundImage.value = docStore.getDocument(props.updateTemplateId).imgDataStr
-    htmlstring.value = docStore.getDocument(props.updateTemplateId).htmlStr
+    backgroundImage.value = docStore.getTemplate(props.updateTemplateId).imgDataStr
+    htmlstring.value = docStore.getTemplate(props.updateTemplateId).htmlStr
   }
 })
 
@@ -110,13 +110,19 @@ const drop = (e) => {
       tempDiv.appendChild(tempRadio)
       e.target.appendChild(tempDiv)
     } else if (data == 'comp-signature') {
-      let tempSignComp = document.createElement('div')
+      let tempSignComp = document.createElement('a')
+      // let clickEventComp = document.createElement('a')
       tempSignComp.setAttribute(
         'style',
-        'font-size:12px;border:1px solid #000; width: 30px; height: 30px;'
+        'display:block;font-size:12px;border:1px solid #000; width: 30px; height: 30px;'
       )
 
-      tempSignComp.addEventListener('click', testSign)
+      tempSignComp.setAttribute('href', 'javascript:alert("test")')
+
+
+      tempSignComp.addEventListener('click', function(){
+        console.log('signature click')
+      })
 
       tempDiv.appendChild(tempSignComp)
       e.target.appendChild(tempDiv)
@@ -130,18 +136,11 @@ onMounted(() => {
   annotationLayer?.addEventListener('drop', drop)
   annotationLayer?.addEventListener('dragover', allowDrop)
 
-  const selectTemplateId = docStore.getSelectDocId()
-  let templateImg: ItemplateImg = docStore.getDocument(selectTemplateId)
+  const selectTemplateId = docStore.getSelectTemplateId()
+  let templateImg: ItemplateImg = docStore.getTemplate(selectTemplateId)
 
-  // const imgList: ItemplateImg[] =
-  //   JSON.parse(localStorage.getItem('templates') ?? '') ?? new Array<ItemplateImg>()
   backgroundImage.value = templateImg.imgDataStr
-
-  
   htmlstring.value = templateImg.htmlStr
-  // backgroundImage.value = docStore.getDocument(props.updateTemplateId).imgDataStr
-  // let elm = document.getElementById('templateLayer')
-  // elm.innerHTML = (docStore.getDocument(props.updateTemplateId) as ItemplateImg).htmlStr
 })
 </script>
 

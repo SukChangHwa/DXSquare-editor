@@ -78,7 +78,7 @@
           {{ `1 / ${templateImages.length} 페이지` }}
         </h6>
         <!-- Navigation -->
-        <ThumbnailItem v-if="imageStore.getSelectDocId()"></ThumbnailItem>
+        <ThumbnailItem v-if="imageStore.getSelectTemplateId()"></ThumbnailItem>
       </div>
     </div>
   </nav>
@@ -86,7 +86,7 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
-import { useDocStore, type ItemplateImg } from '@/stores/document'
+import { useTemplateStore, type ItemplateImg } from '@/stores/document'
 import ThumbnailItem from './thumbnailItem.vue'
 
 const props = defineProps({
@@ -98,9 +98,9 @@ const toggleCollapseShow = (classes: string) => {
   collapseShow.value = classes
 }
 
-const imageStore = useDocStore()
-const selectTemplateId = imageStore.getSelectDocId()
-const curTemplate = imageStore.getDocument(selectTemplateId)
+const imageStore = useTemplateStore()
+const selectTemplateId = imageStore.getSelectTemplateId()
+const curTemplate = imageStore.getTemplate(selectTemplateId)
 const templateImages: ItemplateImg[] = new Array<ItemplateImg>()
 templateImages.push(curTemplate)
 

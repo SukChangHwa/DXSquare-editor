@@ -39,17 +39,18 @@
 </template>
 <script setup lang="ts">
 import { ref } from 'vue'
-import {useDocStore, type ItemplateImg} from '@/stores/document'
+import { useTemplateStore, useDocStore, type ItemplateImg} from '@/stores/document'
 import { useServiceStore } from '@/stores/service'
 import saveModal from '@/components/modal/TemplateSaveModal.vue'
 import htmlToCanvas from 'html2canvas'
 import router from '@/router'
 
 const serviceStore = useServiceStore()
-const docStore = useDocStore()
+const templateStore = useTemplateStore()
+const documentStore = useDocStore()
 
 const isShowSaveModal = ref(false)
-const documentTitle = docStore.getSelectDocName()
+const documentTitle = templateStore.getSelectTemplateName()
 
 const showSaveModal = () => {
   let isShowCreateBar = serviceStore.getCreateBarStatus()
@@ -66,8 +67,7 @@ const hideSaveModal = () =>{
 
 
 const saveDocToHtml = () => {
-  console.log('click')
-  // TODO html로 저장
+
   const name = document.getElementById('doc-container')
 
   let bodyStr = name.parentElement.innerHTML
@@ -83,10 +83,10 @@ const saveDocToHtml = () => {
   htmlStr += '</body>'
   htmlStr += '</html>'
 
-  const parser = new DOMParser()
-  const doc = parser.parseFromString(htmlStr, 'text/html')
+  // const parser = new DOMParser()
+  // const doc = parser.parseFromString(htmlStr, 'text/html')
 
-  let fileName = 'document.html'
+  let fileName = `${documentTitle}.html`
 
   const blob = new Blob([htmlStr], { type: 'text/html' })
   const path = window.URL.createObjectURL(blob)
@@ -96,6 +96,14 @@ const saveDocToHtml = () => {
   link.download = fileName
   link.click()
   link.remove() // IE 미지원
+
+
+  const docObj: ItemplateImg = {
+    id: `${documentTitle}_${new Date().getTime()}`,
+    fileName: documentTitle,
+    htmlStr: htmlStr
+  }
+  documentStore.saveDocument(docObj)
 }
 
 
@@ -106,13 +114,13 @@ const saveTemplate = (title) => {
     const t = canvas.toDataURL()
     console.log(t)
     const imageObj: ItemplateImg = {
-      id: `title_${new Date().getTime()}`,
+      id: `${title}_${new Date().getTime()}`,
       imgDataStr: t,
       fileName: title,
       htmlStr: editorHtmlElem[0].innerHTML
     }
 
-    docStore.saveDocument(imageObj)
+    templateStore.saveTemplate(imageObj)
   })
 
   
@@ -120,13 +128,14 @@ const saveTemplate = (title) => {
 
 
 const showTemplateEditor = ()=>{
-  let selectDocId = docStore.getSelectDocId()
+  let selectDocId = templateStore.getSelectTemplateId()
+  // TODO useRoute를 통해서 route 객체를 얻어온 후, route.path를 watch > 경로 변경 감지. 파라미터 전달 X
   router.push({name: 'templateEditor', params: {docId: selectDocId}})
 }
 
 const goBackDocumentEditor = ()=>{
   const editorHtmlElem = document.getElementsByClassName('fr-element')
-  let selectDocId = docStore.getSelectDocId()
+  let selectDocId = templateStore.getSelectTemplateId()
 
   htmlToCanvas(editorHtmlElem[0]).then((canvas) => {
     const t = canvas.toDataURL()
@@ -135,7 +144,7 @@ const goBackDocumentEditor = ()=>{
       htmlStr: editorHtmlElem[0].innerHTML
     }
 
-    docStore.updateDocument(selectDocId, updateObj)
+    templateStore.updateTemplate(selectDocId, updateObj)
     router.push({name: 'documentEditor', params: {isUpdateTemplate: 'true', updateTemplateId: selectDocId}})
   })
 

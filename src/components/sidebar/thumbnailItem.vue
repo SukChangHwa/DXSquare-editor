@@ -8,15 +8,15 @@
   </ul>
 </template>
 <script setup lang="ts">
-import { useDocStore, type ItemplateImg } from '@/stores/document'
+import { useTemplateStore, type ItemplateImg } from '@/stores/document'
 // const props = defineProps({
 //     templateImages: {type: Array<ItemplateImg>, required: false}
 // })
 // console.log(props.templateImages)
 
-const docStore = useDocStore()
-const selectTemplateId = docStore.getSelectDocId()
-const curTemplate = docStore.getDocument(selectTemplateId)
+const docStore = useTemplateStore()
+const selectTemplateId = docStore.getSelectTemplateId()
+const curTemplate = docStore.getTemplate(selectTemplateId)
 const templateImages: ItemplateImg[] = new Array<ItemplateImg>()
 templateImages.push(curTemplate)
 </script>

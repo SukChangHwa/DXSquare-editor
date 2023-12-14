@@ -8,7 +8,7 @@
 import { onMounted, ref, watch } from 'vue'
 import htmlToPdf from 'html2pdf.js'
 import EditorItem from '@/components/editor/EditorItem.vue'
-import { useDocStore } from '@/stores/document';
+import { useTemplateStore } from '@/stores/document';
 // import FroalaEditor from 'froala-editor'
 // import htmlToCanvas from 'html2canvas'
 
@@ -19,8 +19,8 @@ const props = withDefaults(defineProps<ICreateForm>(), {
   docId: ''
 })
 
-const docStore = useDocStore()
-const htmlContents = docStore.getDocument(props.docId).htmlStr
+const docStore = useTemplateStore()
+const htmlContents = docStore.getTemplate(props.docId)?.htmlStr
 
 const config = ref({
   // events: {

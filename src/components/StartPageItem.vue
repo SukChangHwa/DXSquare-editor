@@ -65,7 +65,7 @@
                     붙여넣거나<br />PDF 파일을 불러올 수 있어요.
                     <a
                       class="mt-5 mb-4 ml-1 text-white font-bold px-6 py-4 rounded outline-none focus:outline-none mr-1 mb-1 bg-blueGray-700 active:bg-blueGray-600 uppercase text-sm shadow hover:shadow-lg ease-linear transition-all duration-150 block"
-                      @click="goCreateTemplatePage"
+                      @click="moveCreateTemplatePage"
                     >
                       작성하기
                     </a>
@@ -90,7 +90,7 @@
                   <div class="mb-4 text-blueGray-500">
                     <a
                       class="get-started text-white mt-5 font-bold px-6 py-4 rounded outline-none focus:outline-none mr-1 mb-1 bg-emerald-500 active:bg-emerald-600 uppercase text-sm shadow hover:shadow-lg ease-linear transition-all duration-150 block"
-                      @click="runDocTest"
+                      @click="showSelectDocumentModal"
                     >
                       계약 서식 실행 테스트
                     </a>
@@ -225,36 +225,51 @@
     @cancel="(val) => showSelectTemplateModal(val)"
     @confirm="(item) => moveTemplateEditPage(item)"
   ></TemplateSelectModal>
+  <DocumentSelectModal v-if="isShowDocumentModal"
+      :title="'문서 선택하기'"
+      @cancel="(val) => showSelectDocumentModal(val)"
+      @confirm="(item) => movePreviewPage(item)">
+  </DocumentSelectModal>
 </template>
 <script setup lang="ts">
 import { ref } from 'vue'
 import documentation from '@/assets/images/documentation.png'
 import TemplateSelectModal from '@/components/modal/TemplateSelectModal.vue'
-import { useDocStore, type ItemplateImg } from '@/stores/document'
+import DocumentSelectModal from './modal/DocumentSelectModal.vue'
+import { useTemplateStore, useDocStore, type ItemplateImg } from '@/stores/document'
 import { useServiceStore } from '@/stores/service'
 import router from '@/router'
 
-const imageStore = useDocStore()
+const templateStore = useTemplateStore()
 const serviceStore = useServiceStore()
+const documentStore = useDocStore()
 
 const isShowTemplateModal = ref(false)
+const isShowDocumentModal = ref(false)
+
 const showSelectTemplateModal = (val) => {
   isShowTemplateModal.value = val
 }
 
-const goCreateTemplatePage = () => {
+const moveCreateTemplatePage = () => {
   serviceStore.setCreateBarStatus(false)
   router.push({ path: '/doc/editor' })
 }
 
 const moveTemplateEditPage = (item: ItemplateImg) => {
-  imageStore.setSelectDocId(item.id)
+  templateStore.setSelectTemplateId(item.id)
   serviceStore.setCreateBarStatus(true)
   router.push({ path: '/doc/dashboard' })
 }
 
-const runDocTest = () => {
-  window.open('/doc', '_blank', 'width=1280,height=720')
+const showSelectDocumentModal = (val) => {
+  isShowDocumentModal.value = val
+}
+const movePreviewPage = (item: ItemplateImg) => {
+  // window.open('/preview', '_blank', 'width=1280,height=720')
+  // eslint-disable-next-line no-debugger
+  debugger;
+  router.push({name:'preview', state:{contentHtml: item.htmlStr}})
 }
 
 </script>
