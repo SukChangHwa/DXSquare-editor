@@ -2,12 +2,12 @@
   <teleport to="body">
     <div class="modal">
       <div
-        class="container flex flex-col bg-white space-y-10 mx-auto my-20 w-4/6 h-2/6 px-7 py-5 rounded-lg modal-window"
+        class="flex flex-col bg-white space-y-10 mx-auto my-20 w-3/6 px-7 py-5 rounded-lg modal-window"
       >
         <div class="flex space-x-2">
           <slot name="title"></slot>
         </div>
-        <div class="container max-w-md max-h-96 overflow-auto">
+        <div class="max-h-96 overflow-auto">
           <slot name="content"></slot>
         </div>
         <div class="flex space-x-2">

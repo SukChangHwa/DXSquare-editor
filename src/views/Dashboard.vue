@@ -114,15 +114,8 @@ const drop = (e) => {
       // let clickEventComp = document.createElement('a')
       tempSignComp.setAttribute(
         'style',
-        'display:block;font-size:12px;border:1px solid #000; width: 30px; height: 30px;'
+        'display:block;font-size:12px;border:1px solid #000; width: 100px; height: 40px;'
       )
-
-      tempSignComp.setAttribute('href', 'javascript:alert("test")')
-
-
-      tempSignComp.addEventListener('click', function(){
-        console.log('signature click')
-      })
 
       tempDiv.appendChild(tempSignComp)
       e.target.appendChild(tempDiv)
@@ -139,7 +132,7 @@ onMounted(() => {
   const selectTemplateId = docStore.getSelectTemplateId()
   let templateImg: ItemplateImg = docStore.getTemplate(selectTemplateId)
 
-  backgroundImage.value = templateImg.imgDataStr
+  backgroundImage.value = templateImg.imgDataStr ?? ''
   htmlstring.value = templateImg.htmlStr
 })
 </script>
