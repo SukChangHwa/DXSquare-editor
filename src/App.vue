@@ -1,9 +1,25 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
+import { RouterView, useRoute } from 'vue-router'
+import { ref, watch } from 'vue'
+
+const route = useRoute()
+const layoutClassStr = ref('main-container')
+
+watch(()=>route.path, (curPath)=>{
+  if(curPath == '/doc/dashboard') {
+    layoutClassStr.value = 'main-container-margin'
+  }
+  else {
+    layoutClassStr.value = 'main-container'
+  }
+})
+
 </script>
 
 <template>
-  <RouterView />
+  <RouterView v-slot="{ Component }">
+    <component :is="Component" :mainLayoutClass="layoutClassStr"/>
+  </RouterView>
 </template>
 
 <style scoped>

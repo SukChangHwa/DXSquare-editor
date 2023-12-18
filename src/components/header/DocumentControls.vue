@@ -1,8 +1,8 @@
 <template>
-  <div class="flex flex-nowrap justify-between bg-white p-2 mb-7">
-          <div class="title space-x-3">
-            <span>{{ documentTitle }}</span>
-            <button @click="showTemplateEditor"><i class="fa-regular fa-pen-to-square"></i>템플릿 편집</button>
+  <div class="bg-white pt-2 pb-2 pl-5 pr-5 border">
+    <div class="flex flex-nowrap justify-between md:px-10 px-4">
+      <div class="title space-x-3">
+            <span>{{ documentTitle || '무제' }}</span>
           </div>
           <div class="doc-control-1 space-x-3">
             <select class="pt-0.5 pr-10 pb-0.5 pl-2.5" name="zoom-value">
@@ -18,6 +18,7 @@
             <button><i class="fa-regular fa-images"></i></button>
             <button><i class="fa-solid fa-rotate-left"></i></button>
             <button><i class="fa-solid fa-rotate-right"></i></button>
+            <button @click="showTemplateEditor"><i :class="toggleIconClass"></i></button>
           </div>
           <div class="doc-control-2 space-x-5">
             <button @click="showSaveModal"><i class="fa-regular fa-floppy-disk"></i></button>
@@ -25,8 +26,9 @@
               <i class="fa-solid fa-arrow-right-from-bracket"></i>
             </button>
           </div>
-        </div>
-        <saveModal
+    </div>    
+  </div>
+  <saveModal
     v-if="isShowSaveModal"
     :title="'템플릿 저장'"
     @cancel="hideSaveModal"
@@ -50,6 +52,7 @@ const templateStore = useTemplateStore()
 const documentStore = useDocStore()
 
 const isShowSaveModal = ref(false)
+const toggleIconClass = ref('fa-regular fa-hand-pointer')
 const documentTitle = templateStore.getSelectTemplateName()
 
 const showSaveModal = () => {
@@ -129,6 +132,7 @@ const saveTemplate = (title) => {
 
 const showTemplateEditor = ()=>{
   let selectDocId = templateStore.getSelectTemplateId()
+  toggleIconClass.value = 'fa-regular fa-pen-to-square'
   // TODO useRoute를 통해서 route 객체를 얻어온 후, route.path를 watch > 경로 변경 감지. 파라미터 전달 X
   router.push({name: 'templateEditor', params: {docId: selectDocId}})
 }
@@ -145,6 +149,7 @@ const goBackDocumentEditor = ()=>{
     }
 
     templateStore.updateTemplate(selectDocId, updateObj)
+    toggleIconClass.value = 'fa-regular fa-hand-pointer'
     router.push({name: 'documentEditor', params: {isUpdateTemplate: 'true', updateTemplateId: selectDocId}})
   })
 

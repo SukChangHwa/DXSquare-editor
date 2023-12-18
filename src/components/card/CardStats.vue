@@ -1,6 +1,6 @@
 <template>
-  <div class="relative flex flex-col min-w-0 break-words bg-white rounded mb-6 xl:mb-0 shadow-lg">
-    <div class="flex-auto p-4">
+  <div class="relative flex flex-col min-w-0 break-words bg-white rounded mb-6 xl:mb-0">
+    <div class="flex-auto p-4 mx-auto">
       <div :id="compId" class="flex flex-wrap" draggable="true">
         <div class="relative w-auto pl-1 flex-initial">
           <div

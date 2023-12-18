@@ -1,6 +1,6 @@
 <template>
+
   <div>
-    <Sidebar />
     <div class="flex flex-wrap">
       <div class="w-full h-full mb-12 xl:mb-0 px-4">
         <!-- <froala v-if="isShowEditor === true" class="w-full" id="edit" :tag="'textarea'" :config="config"></froala> -->
@@ -20,7 +20,6 @@
 import { ref, onMounted, watch } from 'vue'
 import { useTemplateStore, type ItemplateImg } from '@/stores/document'
 
-
 interface IProp {
   isUpdateTemplate?: string,
   updateTemplateId?: string
@@ -31,11 +30,9 @@ const props = withDefaults(defineProps<IProp>(), {
 })
 
 
-
 const docStore = useTemplateStore()
 const backgroundImage = ref('')
 const htmlstring = ref()
-
 
 const showFlag = ref(props.isUpdateTemplate)
 
@@ -46,12 +43,6 @@ watch(showFlag, (cur)=>{
     htmlstring.value = docStore.getTemplate(props.updateTemplateId).htmlStr
   }
 })
-
-
-const testSign = (e) => {
-  console.log('asdasdasdas');
-  
-}
 
 const allowDrop = (e) => {
   e.preventDefault()
@@ -65,8 +56,10 @@ const drop = (e) => {
   e.preventDefault()
   let data = e.dataTransfer.getData('Text')
 
-  const topPos = e.layerY - 20
-  const leftPos = e.layerX - 20
+  // const topPos = e.layerY - 20
+  // const leftPos = e.layerX - 20
+  const topPos = e.offsetY - 10
+  const leftPos = e.offsetX - 10
   let idSeq = new Date().getTime()
 
   if (data.indexOf('dxcomplayer') > -1) {

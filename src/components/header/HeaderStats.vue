@@ -2,7 +2,7 @@
   <!-- Header -->
   <!-- <div class="relative bg-emerald-600 md:pt-32 pb-32 pt-12"> -->
     <!-- <div class="px-4 md:px-10 mx-auto w-full"> -->
-      <div>
+      <div class="border p-4 m-4 bg-white shadow-md">
         <!-- Card stats -->
         <!-- <DocumentControls></DocumentControls> -->
 
@@ -34,8 +34,8 @@
           </div>
         </div> -->
 
-        <div class="flex" v-show="props.isShow">
-          <div class="w-full lg:w-6/12 xl:w-3/12 px-4">
+        <div class="flex justify-between" v-show="props.isShow">
+          <div class="px-4">
             <card-stats
               compId="comp-input"
               compName="텍스트"
@@ -43,7 +43,7 @@
               iconColor="bg-fuchsia-900"
             />
           </div>
-          <div class="w-full lg:w-6/12 xl:w-3/12 px-4">
+          <div class="px-4">
             <card-stats
               compId="comp-select"
               compName="리스트박스"
@@ -51,7 +51,7 @@
               iconColor="bg-fuchsia-900"
             />
           </div>
-          <div class="w-full lg:w-6/12 xl:w-3/12 px-4">
+          <div class="px-4">
             <card-stats
               compId="comp-check"
               compName="체크박스"
@@ -59,7 +59,7 @@
               iconColor="bg-fuchsia-900"
             />
           </div>
-          <div class="w-full lg:w-6/12 xl:w-3/12 px-4">
+          <div class="px-4">
             <card-stats
               compId="comp-radio"
               compName="라디오"
@@ -67,7 +67,7 @@
               iconColor="bg-fuchsia-900"
             />
           </div>
-          <div class="w-full lg:w-6/12 xl:w-3/12 px-4">
+          <div class="px-4">
             <card-stats
               compId="comp-signature"
               compName="서명"
@@ -75,7 +75,7 @@
               iconColor="bg-fuchsia-900"
             />
           </div>
-          <div class="w-full lg:w-6/12 xl:w-3/12 px-4">
+          <div class="px-4">
             <card-stats
               compId="comp-image"
               compName="이미지"
@@ -95,6 +95,7 @@ import { ref, onMounted } from 'vue'
 import Constant from '@/assets/ts/constant'
 import CardStats from '@/components/card/CardStats.vue'
 import DocumentControls from '@/components/header/DocumentControls.vue'
+import dragPorinter from '@/assets/images/drag-pointer.png'
 
 interface IProp {
   isShow?: boolean
@@ -108,7 +109,10 @@ const props = withDefaults(defineProps<IProp>(), {
 
 
 const dragging = function (e: any) {
+  const img = new Image();
+  img.src = dragPorinter
   e.dataTransfer.setData('Text', e.target.id)
+  e.dataTransfer.setDragImage(img, 18, 15);
 }
 
 
