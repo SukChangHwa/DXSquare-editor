@@ -7,7 +7,7 @@
         <div class="w-full">
           <div id="doc-container" class="layer">
             <!-- <img :src="backgroundImage" /> -->
-            <div id="templateLayer" v-html="htmlstring"></div>
+            <div id="templateLayer" v-html="htmlstring" class="template-layer"></div>
             <canvas class="canvas-div"></canvas>
             <div id="annotationLayer" class="annotation-layer"></div>
           </div>
@@ -145,16 +145,9 @@ onMounted(() => {
   width: 100%;
   height: 600px;
   background-color: #fff;
+  overflow-y: auto;
 }
 
-.annotation-layer {
-  z-index: 9;
-  width: 100%;
-  height: 100vh;
-  position: absolute;
-  left: 0;
-  top: 0;
-}
 
 .canvas-div {
   width: 100%;

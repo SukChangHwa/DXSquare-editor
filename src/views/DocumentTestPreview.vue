@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div id="preview-container" class="container">
     <div v-html="docHtml"></div>
   </div>
   <SignatureModal v-if="isShowSignModal" :title="'서명하기'" @cancel="hideSignModal" @confirm="(str)=>applySign(str)"></SignatureModal>
@@ -65,4 +65,5 @@ onMounted(()=>{
   })
 })
 </script>
-<style scoped></style>
+<style scoped>
+</style>
