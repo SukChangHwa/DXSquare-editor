@@ -61,7 +61,8 @@
                   </div>
                   <h6 class="text-xl mb-1 font-semibold">템플릿</h6>
                   <div class="mb-4 text-blueGray-500">
-                    계약문서를 만들기 전<br>서식문서가 없나요?<br>걱정하지 말고<br>여기부터 시작하세요.
+                    계약문서를 만들기 전<br />서식문서가 없나요?<br />걱정하지 말고<br />여기부터
+                    시작하세요.
                     <a
                       class="mt-5 mb-4 ml-1 text-white font-bold px-6 py-4 rounded outline-none focus:outline-none mr-1 mb-1 bg-blueGray-700 active:bg-blueGray-600 uppercase text-sm shadow hover:shadow-lg ease-linear transition-all duration-150 block"
                       @click="moveCreateTemplatePage"
@@ -86,7 +87,7 @@
                   </div>
                   <h6 class="text-xl mb-1 font-semibold">서식 테스트(DEV)</h6>
                   <div class="mb-4 text-blueGray-500">
-                    마지막 단계네요!<br>완성된 템플릿 문서로<br>계약을 진행하세요.
+                    마지막 단계네요!<br />완성된 템플릿 문서로<br />계약을 진행하세요.
                     <a
                       class="get-started text-white mt-5 font-bold px-6 py-4 rounded outline-none focus:outline-none mr-1 mb-1 bg-emerald-500 active:bg-emerald-600 uppercase text-sm shadow hover:shadow-lg ease-linear transition-all duration-150 block"
                       @click="showSelectDocumentModal"
@@ -107,7 +108,7 @@
                   </div>
                   <h6 class="text-xl mb-1 font-semibold">서식 만들기</h6>
                   <div class="mb-4 text-blueGray-500">
-                    준비된 서식문서가 있다면<br>여기로 끌어다 놓아주세요.
+                    준비된 서식문서가 있다면<br />여기로 끌어다 놓아주세요.
                     <a
                       @click="showSelectTemplateModal(true)"
                       class="get-started text-white mt-5 font-bold px-6 py-4 rounded outline-none focus:outline-none mr-1 mb-1 bg-emerald-500 active:bg-emerald-600 uppercase text-sm shadow hover:shadow-lg ease-linear transition-all duration-150 block"

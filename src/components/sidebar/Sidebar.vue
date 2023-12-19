@@ -72,7 +72,7 @@
         <!-- Divider -->
         <div class="ml-auto">
           <button @click="uploadFile"><i class="fa-solid fa-file-circle-plus"></i></button>
-          <UploadItem class="hidden" :isExec="isExecFileUpload"/>
+          <UploadItem class="hidden" :isExec="isExecFileUpload" />
         </div>
         <hr class="my-4 md:min-w-full" />
         <!-- Heading -->
@@ -108,7 +108,6 @@ const toggleCollapseShow = (classes: string) => {
 const uploadFile = () => {
   isExecFileUpload.value = true
 }
-
 
 const imageStore = useTemplateStore()
 const selectTemplateId = imageStore.getSelectTemplateId()
