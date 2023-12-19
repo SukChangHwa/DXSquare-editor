@@ -7,6 +7,8 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
 import { pdfjsLib, pdfViewer } from '@/assets/ts/pdfjs'
+import FroalaEditor from 'froala-editor';
+import { useEditorStore } from '@/stores/service';
 
 const props = defineProps({
   isExec: Boolean
@@ -15,7 +17,7 @@ const props = defineProps({
 const uploadComp = ref(null)
 const pdfCanvas = ref(null)
 const CMAP_URL = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@2.5.207/cmaps/'
-
+const editorStore = useEditorStore()
 watch(
   () => props.isExec,
   (cur) => {
@@ -27,108 +29,151 @@ watch(
   }
 )
 
+const BASE64_MARKER = ';base64,';
+
+const convertDataURIToBinary = (dataURI) => {
+  var base64Index = dataURI.indexOf(BASE64_MARKER) + BASE64_MARKER.length;
+  var base64 = dataURI.substring(base64Index);
+  var raw = window.atob(base64);
+  var rawLength = raw.length;
+  var array = new Uint8Array(new ArrayBuffer(rawLength));
+
+  for (let i = 0; i < rawLength; i++) {
+    array[i] = raw.charCodeAt(i);
+  }
+  return array;
+}
+
 const loadPdfFile = () => {
   console.log(uploadComp.value.files[0])
   const fileReader = new FileReader()
-  let canvas = pdfCanvas.value
 
   fileReader.readAsDataURL(uploadComp.value.files[0])
-
+  // eslint-disable-next-line no-debugger
+  debugger
   fileReader.onload = () => {
     console.log(fileReader.result)
+    // eslint-disable-next-line no-debugger
     debugger
-    let loadingTask = pdfjsLib.getDocument({
-      cMapPacked: true,
-      disableFontFace: true,
-      cMapUrl: CMAP_URL,
-      url: fileReader.result
-    })
+    const pdfAsArray = convertDataURIToBinary(fileReader.result)
+    let loadingTask = pdfjsLib.getDocument(pdfAsArray)
 
     loadingTask.promise.then(async (pdf) => {
       console.log(pdf)
-      debugger
-      let pdfContainer = document.createElement('div')
-      pdfContainer.setAttribute('id', 'pdf-container')
-      let nPage = pdf.numPages
-      for (let i = 1; i <= nPage; i++) {
-        await pdf.getPage(i).then(async (page) => {
-          let scale = 1.5
-          let viewport = page.getViewport({ scale: scale })
-          let div = document.createElement('div')
+      
+      pdf.getPage(1).then((page)=>{
+        let scale = 1.5
+        let viewport = page.getViewport({ scale: scale })
 
-          div.setAttribute('id', 'page-' + (page._pageIndex + 1))
-          div.setAttribute('style', 'position: relative')
+        let $canvas = pdfCanvas.value
+        let context = $canvas.getContext('2d');
+        $canvas.height = viewport.height;
+        $canvas.width = viewport.width;
 
-          pdfContainer.appendChild(div)
+        let renderContext = {
+          canvasContext: context,
+          viewport: viewport
+        };
 
-          let canvas = document.createElement('canvas')
-          div.appendChild(canvas)
+        let renderTask = page.render(renderContext)
+        renderTask.promise.then(()=>{
 
-          // Prepare canvas using PDF page dimensions
-          let context = canvas.getContext('2d')
-          canvas.height = viewport.height
-          canvas.width = viewport.width
+          let tempImg = $canvas.toDataURL('image/png')
+          // eslint-disable-next-line no-debugger
+          debugger
+          const editorObj = editorStore.getEditorObject()
+          let preContentStr = editorObj.getEditor().html.get()
+          preContentStr += `<img src='${tempImg}'/>`
+          preContentStr += `<span class="fr-marker" style="line-height: 0; border:1px solid #000; ">페이지 구분선</span>`
+          editorObj.getEditor().html.set(preContentStr)
+          
+        });
 
-          // Render PDF page into canvas context
-          let renderContext = {
-            canvasContext: context,
-            viewport: viewport
-          }
+      })
+      // for (let i = 1; i <= nPage; i++) {
+      //   await pdf.getPage(i).then(async (page) => {
+      //     let scale = 1.5
+      //     let viewport = page.getViewport({ scale: scale })
+      //     let div = document.createElement('div')
 
-          let renderTask = page.render(renderContext)
+      //     div.setAttribute('id', 'page-' + (page._pageIndex + 1))
+      //     div.setAttribute('style', 'position: relative')
 
-          await renderTask.promise
-            .then(() => page.getTextContent())
-            .then((textContent) => {
-              let $canvas = document.createElement('canvas')
-              let tempImg = $canvas.toDataURL('image/png')
-              debugger
+      //     pdfContainer.appendChild(div)
 
-              // Create div which will hold text-fragments
-              // let textLayerDiv = document.createElement("div");
+      //     let canvas = document.createElement('canvas')
+      //     div.appendChild(canvas)
 
-              // // Set it's class to textLayer which have required CSS styles
-              // textLayerDiv.setAttribute("class", "textLayer");
+      //     // Prepare canvas using PDF page dimensions
+      //     let context = canvas.getContext('2d')
+      //     canvas.height = viewport.height
+      //     canvas.width = viewport.width
 
-              // // Append newly created div in `div#page-#{pdf_page_number}`
-              // div.appendChild(textLayerDiv);
+      //     // Render PDF page into canvas context
+      //     let renderContext = {
+      //       canvasContext: context,
+      //       viewport: viewport
+      //     }
 
-              // // Create new instance of TextLayerBuilder class
-              // let textLayer = new pdfViewer.TextLayerBuilder({
-              //   textLayerDiv: textLayerDiv,
-              //   pageIndex: page.pageIndex,
-              //   viewport: viewport
-              // });
+      //     let renderTask = page.render(renderContext)
 
-              // // Set text-fragments
-              // textLayer.setTextContentSource(textContent);
-              // debugger;
-              // // Render text-fragments
-              // textLayer.render();
-            })
+      //     await renderTask.promise
+      //       // .then(() => page.getTextContent())
+      //       .then(() => {
+      //         let $canvas = pdfCanvas.value
+      //         let tempImg = $canvas.toDataURL('image/png')
+      //         // eslint-disable-next-line no-debugger
+      //         debugger
+      //         const editorObj = editorStore.getEditorObject()
+      //         let preContentStr = editorObj.getEditor().html.get()
+      //         preContentStr += `<img src='${tempImg}'/>`
+      //         editorObj.getEditor().html.set(preContentStr)
 
-          // page.getTextContent().then((content)=>{
-          //   let htmlStrings = content.items.map((item)=>item.str)
-          //   console.log(htmlStrings.join(" "))
-          //   page.cleanup()
-          // })
-          // let renderTask = page.render(renderContext);
-          // renderTask.promise.then(function () {
-          //     let $canvas = pdfCanvas.value
-          //     let tempImg = $canvas.toDataURL("image/png");
+      //         // Create div which will hold text-fragments
+      //         // let textLayerDiv = document.createElement("div");
 
-          // const $link = document.createElement("a");
-          // $link.download = "canvas.png";
-          // $link.href = $canvas.toDataURL("image/png");
+      //         // // Set it's class to textLayer which have required CSS styles
+      //         // textLayerDiv.setAttribute("class", "textLayer");
 
-          // $link.click();
+      //         // // Append newly created div in `div#page-#{pdf_page_number}`
+      //         // div.appendChild(textLayerDiv);
 
-          // console.log('dataImageBase64');
-          // console.log(tempImg);
-          // debugger;
-          // })
-        })
-      }
+      //         // // Create new instance of TextLayerBuilder class
+      //         // let textLayer = new pdfViewer.TextLayerBuilder({
+      //         //   textLayerDiv: textLayerDiv,
+      //         //   pageIndex: page.pageIndex,
+      //         //   viewport: viewport
+      //         // });
+
+      //         // // Set text-fragments
+      //         // textLayer.setTextContentSource(textContent);
+      //         // debugger;
+      //         // // Render text-fragments
+      //         // textLayer.render();
+      //       })
+
+      //     // page.getTextContent().then((content)=>{
+      //     //   let htmlStrings = content.items.map((item)=>item.str)
+      //     //   console.log(htmlStrings.join(" "))
+      //     //   page.cleanup()
+      //     // })
+      //     // let renderTask = page.render(renderContext);
+      //     // renderTask.promise.then(function () {
+      //     //     let $canvas = pdfCanvas.value
+      //     //     let tempImg = $canvas.toDataURL("image/png");
+
+      //     // const $link = document.createElement("a");
+      //     // $link.download = "canvas.png";
+      //     // $link.href = $canvas.toDataURL("image/png");
+
+      //     // $link.click();
+
+      //     // console.log('dataImageBase64');
+      //     // console.log(tempImg);
+      //     // debugger;
+      //     // })
+      //   })
+      // }
     })
   }
 }
