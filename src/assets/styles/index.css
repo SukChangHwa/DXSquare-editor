@@ -8,35 +8,31 @@
     background-color: rgba(241, 245, 249, var(--tw-bg-opacity));
   }
   .bg-squarePurple-100 {
-    background-color: #52424D;
+    background-color: #52424d;
   }
   .bg-squareLightPurple-100 {
-    background-color: #B9A6B3;
+    background-color: #b9a6b3;
   }
   .text-squareLightPurple-100 {
-    color: #B9A6B3;
+    color: #b9a6b3;
   }
 }
 
-
 @layer components {
   .main-container {
-    @apply relative bg-blueGray-100 w-full
+    @apply relative bg-blueGray-100 w-full;
   }
-  
+
   .main-container-margin {
-    @apply ml-52 relative bg-blueGray-100
+    @apply ml-52 relative bg-blueGray-100;
   }
   .drag-pointer {
-    background-color: #B9A6B3;
+    background-color: #b9a6b3;
     width: 20px;
     height: 20px;
     border-radius: 50%;
-
   }
   #preview-container .template-layer {
-    border: 1px solid #000;
-    padding: 5px;
   }
 
   .template-layer {
@@ -50,6 +46,9 @@
     left: 0;
     top: 0;
   }
-
-  
+  .modal-content {
+    min-height: 200px;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
 }

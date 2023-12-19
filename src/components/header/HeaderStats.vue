@@ -1,12 +1,12 @@
 <template>
   <!-- Header -->
   <!-- <div class="relative bg-emerald-600 md:pt-32 pb-32 pt-12"> -->
-    <!-- <div class="px-4 md:px-10 mx-auto w-full"> -->
-      <div class="border p-4 m-4 bg-white shadow-md">
-        <!-- Card stats -->
-        <!-- <DocumentControls></DocumentControls> -->
+  <!-- <div class="px-4 md:px-10 mx-auto w-full"> -->
+  <div class="border p-4 m-4 bg-white shadow-md">
+    <!-- Card stats -->
+    <!-- <DocumentControls></DocumentControls> -->
 
-        <!-- <div class="flex flex-nowrap justify-between bg-white p-2 mb-7">
+    <!-- <div class="flex flex-nowrap justify-between bg-white p-2 mb-7">
           <div class="title space-x-3">
             <span>표준 근로계약서</span>
             <button @click="showTemplateEditor"><i class="fa-regular fa-pen-to-square"></i>템플릿 편집</button>
@@ -34,60 +34,59 @@
           </div>
         </div> -->
 
-        <div class="flex justify-between" v-show="props.isShow">
-          <div class="px-4">
-            <card-stats
-              compId="comp-input"
-              compName="텍스트"
-              iconName="far fa-solid fa-t"
-              iconColor="bg-fuchsia-900"
-            />
-          </div>
-          <div class="px-4">
-            <card-stats
-              compId="comp-select"
-              compName="리스트박스"
-              iconName="fa-regular fa-square-caret-down"
-              iconColor="bg-fuchsia-900"
-            />
-          </div>
-          <div class="px-4">
-            <card-stats
-              compId="comp-check"
-              compName="체크박스"
-              iconName="fa-regular fa-circle-check"
-              iconColor="bg-fuchsia-900"
-            />
-          </div>
-          <div class="px-4">
-            <card-stats
-              compId="comp-radio"
-              compName="라디오"
-              iconName="fa-regular fa-circle-dot"
-              iconColor="bg-fuchsia-900"
-            />
-          </div>
-          <div class="px-4">
-            <card-stats
-              compId="comp-signature"
-              compName="서명"
-              iconName="fa-solid fa-signature"
-              iconColor="bg-fuchsia-900"
-            />
-          </div>
-          <div class="px-4">
-            <card-stats
-              compId="comp-image"
-              compName="이미지"
-              iconName="fa-regular fa-image"
-              iconColor="bg-fuchsia-900"
-            />
-          </div>
-        </div>
+    <div class="flex justify-between" v-show="props.isShow">
+      <div class="px-4">
+        <card-stats
+          compId="comp-input"
+          compName="텍스트"
+          iconName="far fa-solid fa-t"
+          iconColor="bg-fuchsia-900"
+        />
       </div>
-    <!-- </div> -->
+      <div class="px-4">
+        <card-stats
+          compId="comp-select"
+          compName="리스트박스"
+          iconName="fa-regular fa-square-caret-down"
+          iconColor="bg-fuchsia-900"
+        />
+      </div>
+      <div class="px-4">
+        <card-stats
+          compId="comp-check"
+          compName="체크박스"
+          iconName="fa-regular fa-circle-check"
+          iconColor="bg-fuchsia-900"
+        />
+      </div>
+      <div class="px-4">
+        <card-stats
+          compId="comp-radio"
+          compName="라디오"
+          iconName="fa-regular fa-circle-dot"
+          iconColor="bg-fuchsia-900"
+        />
+      </div>
+      <div class="px-4">
+        <card-stats
+          compId="comp-signature"
+          compName="서명"
+          iconName="fa-solid fa-signature"
+          iconColor="bg-fuchsia-900"
+        />
+      </div>
+      <div class="px-4">
+        <card-stats
+          compId="comp-image"
+          compName="이미지"
+          iconName="fa-regular fa-image"
+          iconColor="bg-fuchsia-900"
+        />
+      </div>
+    </div>
+  </div>
   <!-- </div> -->
-  
+  <!-- </div> -->
 </template>
 
 <script setup lang="ts">
@@ -107,14 +106,12 @@ const props = withDefaults(defineProps<IProp>(), {
   isShowTemplateSaveBtn: false
 })
 
-
 const dragging = function (e: any) {
-  const img = new Image();
+  const img = new Image()
   img.src = dragPorinter
   e.dataTransfer.setData('Text', e.target.id)
-  e.dataTransfer.setDragImage(img, 18, 15);
+  e.dataTransfer.setDragImage(img, 18, 15)
 }
-
 
 const compBtnList: { [key: string]: string } = Constant.COMPONENT_CREATE_BUTTON_ID_LIST
 

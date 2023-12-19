@@ -70,9 +70,8 @@
                       작성하기
                     </a>
                     <a
-                      href=""
                       class="mt-5 mb-4 ml-1 text-white font-bold px-6 py-4 rounded outline-none focus:outline-none mr-1 mb-1 bg-blueGray-700 active:bg-blueGray-600 uppercase text-sm shadow hover:shadow-lg ease-linear transition-all duration-150 block"
-                      target="_blank"
+                      @click="showCreateTemplateModal"
                     >
                       불러오기
                     </a>
@@ -219,21 +218,31 @@
       </div>
     </div>
   </section>
+  <TemplateCreateModal
+    v-if="isShowTemplateCreateModal"
+    :title="'서식 문서 시작하기'"
+    @cancel="(val) => showCreateTemplateModal(val)"
+    @confirm="(item) => moveCreateTemplatePage()"
+  >
+  </TemplateCreateModal>
   <TemplateSelectModal
     v-if="isShowTemplateModal"
-    :title="'템플릿 선택하기'"
+    :title="'템플릿 문서 시작하기'"
     @cancel="(val) => showSelectTemplateModal(val)"
-    @confirm="(item) => moveTemplateEditPage(item)"
+    @confirm="(id) => moveTemplateEditPage(id)"
   ></TemplateSelectModal>
-  <DocumentSelectModal v-if="isShowDocumentModal"
-      :title="'문서 선택하기'"
-      @cancel="(val) => showSelectDocumentModal(val)"
-      @confirm="(item) => movePreviewPage(item)">
+  <DocumentSelectModal
+    v-if="isShowDocumentModal"
+    :title="'문서 선택하기'"
+    @cancel="(val) => showSelectDocumentModal(val)"
+    @confirm="(item) => movePreviewPage(item)"
+  >
   </DocumentSelectModal>
 </template>
 <script setup lang="ts">
 import { ref } from 'vue'
 import documentation from '@/assets/images/documentation.png'
+import TemplateCreateModal from './modal/TemplateCreateModal.vue'
 import TemplateSelectModal from '@/components/modal/TemplateSelectModal.vue'
 import DocumentSelectModal from './modal/DocumentSelectModal.vue'
 import { useTemplateStore, useDocStore, type ItemplateImg } from '@/stores/document'
@@ -244,8 +253,13 @@ const templateStore = useTemplateStore()
 const serviceStore = useServiceStore()
 const documentStore = useDocStore()
 
+const isShowTemplateCreateModal = ref(false)
 const isShowTemplateModal = ref(false)
 const isShowDocumentModal = ref(false)
+
+const showCreateTemplateModal = (val) => {
+  isShowTemplateCreateModal.value = val
+}
 
 const showSelectTemplateModal = (val) => {
   isShowTemplateModal.value = val
@@ -256,8 +270,8 @@ const moveCreateTemplatePage = () => {
   router.push({ path: '/doc/editor' })
 }
 
-const moveTemplateEditPage = (item: ItemplateImg) => {
-  templateStore.setSelectTemplateId(item.id)
+const moveTemplateEditPage = (itemId: string) => {
+  templateStore.setSelectTemplateId(itemId)
   serviceStore.setCreateBarStatus(true)
   router.push({ path: '/doc/dashboard' })
 }
@@ -267,8 +281,7 @@ const showSelectDocumentModal = (val) => {
 }
 const movePreviewPage = (item: ItemplateImg) => {
   // window.open('/preview', '_blank', 'width=1280,height=720')
-  router.push({name:'preview', state:{contentHtml: item.htmlStr}})
+  router.push({ name: 'preview', state: { contentHtml: item.htmlStr } })
 }
-
 </script>
 <style scoped></style>

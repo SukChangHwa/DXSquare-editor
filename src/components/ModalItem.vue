@@ -10,7 +10,7 @@
         <div class="max-h-96 overflow-auto">
           <slot name="content"></slot>
         </div>
-        <div class="flex space-x-2">
+        <div class="flex space-x-2 ml-auto">
           <slot name="footer"></slot>
         </div>
       </div>

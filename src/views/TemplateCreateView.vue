@@ -8,7 +8,7 @@
 import { onMounted, ref, watch } from 'vue'
 import htmlToPdf from 'html2pdf.js'
 import EditorItem from '@/components/editor/EditorItem.vue'
-import { useTemplateStore } from '@/stores/document';
+import { useTemplateStore } from '@/stores/document'
 // import FroalaEditor from 'froala-editor'
 // import htmlToCanvas from 'html2canvas'
 

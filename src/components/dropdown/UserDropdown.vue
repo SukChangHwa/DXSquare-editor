@@ -11,9 +11,8 @@
         <span
           class="w-12 h-12 text-sm text-white bg-blueGray-200 inline-flex items-center justify-center rounded-full"
         >
-        <img class="rounded-full" :src="image">
+          <img class="rounded-full" :src="image" />
         </span>
-        
       </div>
     </a>
     <div
@@ -21,7 +20,7 @@
       class="bg-white text-base z-50 float-left py-2 list-none text-left rounded shadow-lg min-w-48"
       v-bind:class="{
         hidden: !dropdownPopoverShow,
-        block: dropdownPopoverShow,
+        block: dropdownPopoverShow
       }"
     >
       <a
@@ -54,29 +53,29 @@
 </template>
 
 <script>
-import { createPopper } from "@popperjs/core";
+import { createPopper } from '@popperjs/core'
 
-import image from "@/assets/images/team-4-470x470.png";
+import image from '@/assets/images/team-4-470x470.png'
 
 export default {
   data() {
     return {
       dropdownPopoverShow: false,
-      image: image,
-    };
+      image: image
+    }
   },
   methods: {
     toggleDropdown: function (event) {
-      event.preventDefault();
+      event.preventDefault()
       if (this.dropdownPopoverShow) {
-        this.dropdownPopoverShow = false;
+        this.dropdownPopoverShow = false
       } else {
-        this.dropdownPopoverShow = true;
+        this.dropdownPopoverShow = true
         createPopper(this.$refs.btnDropdownRef, this.$refs.popoverDropdownRef, {
-          placement: "bottom-start",
-        });
+          placement: 'bottom-start'
+        })
       }
-    },
-  },
-};
+    }
+  }
+}
 </script>

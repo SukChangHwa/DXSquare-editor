@@ -7,7 +7,7 @@
       class="w-full mx-autp items-center flex justify-between md:flex-nowrap flex-wrap md:px-10 px-4"
     >
       <!-- Brand -->
-      <img class="lg:inline-block" :src="SignSquareLogo" width="130">
+      <img class="lg:inline-block" :src="SignSquareLogo" width="130" />
       <!-- <a
         class="text-white text-sm uppercase hidden lg:inline-block font-semibold"
         href="javascript:void(0)"
@@ -37,6 +37,6 @@
 </template>
 
 <script setup lang="ts">
-import UserDropdown from "@/components/dropdown/UserDropdown.vue"
+import UserDropdown from '@/components/dropdown/UserDropdown.vue'
 import SignSquareLogo from '@/assets/images/signsquare-logo.png'
 </script>

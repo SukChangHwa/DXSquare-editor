@@ -1,5 +1,4 @@
 <template>
-
   <div>
     <div class="flex flex-wrap">
       <div class="w-full h-full mb-12 xl:mb-0 px-4">
@@ -21,14 +20,13 @@ import { ref, onMounted, watch } from 'vue'
 import { useTemplateStore, type ItemplateImg } from '@/stores/document'
 
 interface IProp {
-  isUpdateTemplate?: string,
+  isUpdateTemplate?: string
   updateTemplateId?: string
 }
 const props = withDefaults(defineProps<IProp>(), {
   isUpdateTemplate: 'false',
-  updateTemplateId:''
+  updateTemplateId: ''
 })
-
 
 const docStore = useTemplateStore()
 const backgroundImage = ref('')
@@ -36,9 +34,8 @@ const htmlstring = ref()
 
 const showFlag = ref(props.isUpdateTemplate)
 
-
-watch(showFlag, (cur)=>{
-  if(cur === 'true') {
+watch(showFlag, (cur) => {
+  if (cur === 'true') {
     backgroundImage.value = docStore.getTemplate(props.updateTemplateId).imgDataStr
     htmlstring.value = docStore.getTemplate(props.updateTemplateId).htmlStr
   }
@@ -147,7 +144,6 @@ onMounted(() => {
   background-color: #fff;
   overflow-y: auto;
 }
-
 
 .canvas-div {
   width: 100%;

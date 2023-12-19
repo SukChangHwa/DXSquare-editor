@@ -5,7 +5,12 @@
     </template>
     <template #content>
       <div class="flex flex-col modal-content">
-        <canvas id="signpad-canvas" class="border border-gray-200 canvas-layer" width="765" height="300"></canvas>
+        <canvas
+          id="signpad-canvas"
+          class="border border-gray-200 canvas-layer"
+          width="765"
+          height="300"
+        ></canvas>
       </div>
     </template>
     <template #footer>

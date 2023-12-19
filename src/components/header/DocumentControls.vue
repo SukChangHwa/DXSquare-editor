@@ -2,31 +2,31 @@
   <div class="bg-white pt-2 pb-2 pl-5 pr-5 border">
     <div class="flex flex-nowrap justify-between md:px-10 px-4">
       <div class="title space-x-3">
-            <span>{{ documentTitle || '무제' }}</span>
-          </div>
-          <div class="doc-control-1 space-x-3">
-            <select class="pt-0.5 pr-10 pb-0.5 pl-2.5" name="zoom-value">
-              <option value="50">50%</option>
-              <option value="75">75%</option>
-              <option value="90">90%</option>
-              <option value="100" selected>100%</option>
-              <option value="125">125%</option>
-              <option value="150">150%</option>
-              <option value="200">200%</option>
-            </select>
-            <button><i class="fa-solid fa-pause"></i></button>
-            <button><i class="fa-regular fa-images"></i></button>
-            <button><i class="fa-solid fa-rotate-left"></i></button>
-            <button><i class="fa-solid fa-rotate-right"></i></button>
-            <button @click="showTemplateEditor"><i :class="toggleIconClass"></i></button>
-          </div>
-          <div class="doc-control-2 space-x-5">
-            <button @click="showSaveModal"><i class="fa-regular fa-floppy-disk"></i></button>
-            <button @click="goBackDocumentEditor">
-              <i class="fa-solid fa-arrow-right-from-bracket"></i>
-            </button>
-          </div>
-    </div>    
+        <span>{{ documentTitle || '무제' }}</span>
+      </div>
+      <div class="doc-control-1 space-x-3">
+        <select class="pt-0.5 pr-10 pb-0.5 pl-2.5" name="zoom-value">
+          <option value="50">50%</option>
+          <option value="75">75%</option>
+          <option value="90">90%</option>
+          <option value="100" selected>100%</option>
+          <option value="125">125%</option>
+          <option value="150">150%</option>
+          <option value="200">200%</option>
+        </select>
+        <button><i class="fa-solid fa-pause"></i></button>
+        <button><i class="fa-regular fa-images"></i></button>
+        <button><i class="fa-solid fa-rotate-left"></i></button>
+        <button><i class="fa-solid fa-rotate-right"></i></button>
+        <button @click="showTemplateEditor"><i :class="toggleIconClass"></i></button>
+      </div>
+      <div class="doc-control-2 space-x-5">
+        <button @click="showSaveModal"><i class="fa-regular fa-floppy-disk"></i></button>
+        <button @click="goBackDocumentEditor">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i>
+        </button>
+      </div>
+    </div>
   </div>
   <saveModal
     v-if="isShowSaveModal"
@@ -41,7 +41,7 @@
 </template>
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useTemplateStore, useDocStore, type ItemplateImg} from '@/stores/document'
+import { useTemplateStore, useDocStore, type ItemplateImg } from '@/stores/document'
 import { useServiceStore } from '@/stores/service'
 import saveModal from '@/components/modal/TemplateSaveModal.vue'
 import htmlToCanvas from 'html2canvas'
@@ -64,13 +64,11 @@ const showSaveModal = () => {
   }
 }
 
-const hideSaveModal = () =>{
+const hideSaveModal = () => {
   isShowSaveModal.value = false
 }
 
-
 const saveDocToHtml = () => {
-
   const name = document.getElementById('doc-container')
 
   let bodyStr = name.parentElement.innerHTML
@@ -100,7 +98,6 @@ const saveDocToHtml = () => {
   link.click()
   link.remove() // IE 미지원
 
-
   const docObj: ItemplateImg = {
     id: `${documentTitle}_${new Date().getTime()}`,
     fileName: documentTitle,
@@ -108,7 +105,6 @@ const saveDocToHtml = () => {
   }
   documentStore.saveDocument(docObj)
 }
-
 
 const saveTemplate = (title) => {
   const editorHtmlElem = document.getElementsByClassName('fr-element')
@@ -125,19 +121,16 @@ const saveTemplate = (title) => {
 
     templateStore.saveTemplate(imageObj)
   })
-
-  
 }
 
-
-const showTemplateEditor = ()=>{
+const showTemplateEditor = () => {
   let selectDocId = templateStore.getSelectTemplateId()
   toggleIconClass.value = 'fa-regular fa-pen-to-square'
   // TODO useRoute를 통해서 route 객체를 얻어온 후, route.path를 watch > 경로 변경 감지. 파라미터 전달 X
-  router.push({name: 'templateEditor', params: {docId: selectDocId}})
+  router.push({ name: 'templateEditor', params: { docId: selectDocId } })
 }
 
-const goBackDocumentEditor = ()=>{
+const goBackDocumentEditor = () => {
   const editorHtmlElem = document.getElementsByClassName('fr-element')
   let selectDocId = templateStore.getSelectTemplateId()
 
@@ -150,13 +143,12 @@ const goBackDocumentEditor = ()=>{
 
     templateStore.updateTemplate(selectDocId, updateObj)
     toggleIconClass.value = 'fa-regular fa-hand-pointer'
-    router.push({name: 'documentEditor', params: {isUpdateTemplate: 'true', updateTemplateId: selectDocId}})
+    router.push({
+      name: 'documentEditor',
+      params: { isUpdateTemplate: 'true', updateTemplateId: selectDocId }
+    })
   })
-
-  
-  
 }
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>
